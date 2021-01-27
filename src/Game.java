@@ -5,10 +5,14 @@ public class Game {
 
     private final Display display;
     private final List<GameObject> gameObjects;
+    private final Input input;
 
     public Game(int width, int height) {
-        this.display = new Display(width, height);
+        input = new Input();
+
+        this.display = new Display(width, height, input);
         this.gameObjects = new ArrayList<>();
+        this.gameObjects.add(new Player(new PlayerController(input)));
     }
 
     public void render() {
