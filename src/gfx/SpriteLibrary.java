@@ -9,11 +9,14 @@ public class SpriteLibrary {
 
     private final static String PATH_TO_UNITS = "/sprites/units";
 
-    private Map<String, SpriteSet> units;
+    private static Map<String, SpriteSet> units = new HashMap<>();
 
     public SpriteLibrary() {
-        units = new HashMap<>();
         loadSpritesFromDisk();
+    }
+
+    public SpriteSet getUnit(String name) {
+        return units.get(name);
     }
 
     private void loadSpritesFromDisk() {
