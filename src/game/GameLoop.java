@@ -1,3 +1,7 @@
+package game;
+
+import entity.Game;
+
 public class GameLoop implements Runnable {
 
     private Game game;

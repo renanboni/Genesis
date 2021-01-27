@@ -1,3 +1,9 @@
+package entity;
+
+import controller.Controller;
+import core.Position;
+import game.GameObject;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 

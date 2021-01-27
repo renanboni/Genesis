@@ -1,3 +1,8 @@
+package game;
+
+import core.Position;
+import core.Size;
+
 import java.awt.*;
 
 public abstract class GameObject {
