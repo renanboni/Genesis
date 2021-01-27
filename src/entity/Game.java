@@ -3,6 +3,7 @@ package entity;
 import controller.PlayerController;
 import display.Display;
 import game.GameObject;
+import gfx.SpriteLibrary;
 import input.Input;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class Game {
     private final Display display;
     private final List<GameObject> gameObjects;
     private final Input input;
+    private final SpriteLibrary spriteLibrary;
 
     public Game(int width, int height) {
         input = new Input();
@@ -20,6 +22,7 @@ public class Game {
         this.display = new Display(width, height, input);
         this.gameObjects = new ArrayList<>();
         this.gameObjects.add(new Player(new PlayerController(input)));
+        this.spriteLibrary = new SpriteLibrary();
     }
 
     public void render() {

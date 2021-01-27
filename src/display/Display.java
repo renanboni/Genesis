@@ -10,14 +10,11 @@ import java.awt.image.BufferStrategy;
 public class Display extends JFrame {
 
     private final Canvas canvas;
-    private Renderer renderer;
 
     public Display(int width, int height, Input input) {
         setTitle("Genesis");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
-
-        renderer = new Renderer();
 
         canvas = new Canvas();
         canvas.setPreferredSize(new Dimension(width, height));
@@ -39,7 +36,7 @@ public class Display extends JFrame {
         graphics.setColor(Color.BLACK);
         graphics.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        renderer.render(game, graphics);
+        Renderer.render(game, graphics);
 
         graphics.dispose();
 
