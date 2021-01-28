@@ -1,17 +1,12 @@
 package gfx;
 
-import entity.Game;
-
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SpriteLibrary {
-
-    private final static String PATH_TO_UNITS = "/sprites/units";
 
     private Map<String, SpriteSet> units = new HashMap<>();
     private Map<String, Image> tiles = new HashMap<>();
@@ -25,29 +20,27 @@ public class SpriteLibrary {
     }
 
     private void loadSpritesFromDisk() {
-        loadUnits();
-        loadTiles();
+        loadUnits("/sprites/units");
+        loadTiles("/sprites/tiles");
     }
 
-    private void loadTiles() {
-        BufferedImage image = new BufferedImage(Game.SPRITE_SIZE, Game.SPRITE_SIZE, BufferedImage.TYPE_INT_RGB);
-        Graphics2D graphics2D = image.createGraphics();
+    private void loadTiles(String pathToFolder) {
+        String[] imagesInFolder = getImagesInFolder(pathToFolder);
 
-        graphics2D.setColor(Color.RED);
-        graphics2D.drawRect(0, 0, Game.SPRITE_SIZE, Game.SPRITE_SIZE);
-
-        graphics2D.dispose();
-        tiles.put("default", image);
+        for (String fileName : imagesInFolder) {
+            tiles.put(fileName.substring(0, fileName.length() - 4),
+                    ImageUtils.loadImage(pathToFolder + "/" + fileName));
+        }
     }
 
-    private void loadUnits() {
-        String[] folderNames = getFolderNames();
+    private void loadUnits(String path) {
+        String[] folderNames = getFolderNames(path);
 
         for (String folderName : folderNames) {
             SpriteSet spriteSet = new SpriteSet();
-            String pathToFolder = PATH_TO_UNITS + "/" + folderName;
+            String pathToFolder = path + "/" + folderName;
 
-            String[] sheetsInFolder = getSheetsInFolder(pathToFolder);
+            String[] sheetsInFolder = getImagesInFolder(pathToFolder);
 
             for (String sheetName : sheetsInFolder) {
                 spriteSet.addSheet(sheetName.substring(0, sheetName.length() - 4),
@@ -58,14 +51,14 @@ public class SpriteLibrary {
         }
     }
 
-    private String[] getSheetsInFolder(String s) {
+    private String[] getImagesInFolder(String s) {
         URL resource = SpriteLibrary.class.getResource(s);
         File file = new File(resource.getFile());
         return file.list((current, name) -> new File(current, name).isFile());
     }
 
-    private String[] getFolderNames() {
-        URL resource = SpriteLibrary.class.getResource(SpriteLibrary.PATH_TO_UNITS);
+    private String[] getFolderNames(String path) {
+        URL resource = SpriteLibrary.class.getResource(path);
         File file = new File(resource.getFile());
         return file.list((current, name) -> new File(current, name).isDirectory());
     }

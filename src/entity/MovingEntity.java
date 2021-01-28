@@ -12,16 +12,15 @@ import java.awt.*;
 public abstract class MovingEntity extends GameObject {
 
     protected Controller controller;
-    private Motion motion;
-    private AnimationManager animationManager;
-    private Direction direction;
+    protected Motion motion;
+    protected AnimationManager animationManager;
+    protected Direction direction;
 
     public MovingEntity(Controller controller, SpriteLibrary spriteLibrary) {
         super();
         this.controller = controller;
         this.motion = new Motion(2);
         direction = Direction.S;
-        this.animationManager = new AnimationManager(spriteLibrary.getUnit("dave"));
     }
 
     public void update() {
