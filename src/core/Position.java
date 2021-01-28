@@ -1,10 +1,18 @@
 package core;
 
 public class Position {
+
+    public static int PROXIMITY_RANGE = 5;
+
     private double x;
     private double y;
 
     public Position(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public Position(double x, double y) {
         this.x = x;
         this.y = y;
     }
@@ -37,5 +45,9 @@ public class Position {
         Vector2D vector = motion.getVector();
         x += vector.getX();
         y += vector.getY();
+    }
+
+    public boolean isInRangeOf(Position position) {
+        return Math.abs(x - position.getX()) < PROXIMITY_RANGE && Math.abs(y - position.getY()) < PROXIMITY_RANGE;
     }
 }

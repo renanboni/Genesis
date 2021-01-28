@@ -1,5 +1,6 @@
 package state;
 
+import core.Position;
 import core.Size;
 import display.Camera;
 import game.GameObject;
@@ -11,6 +12,7 @@ import map.GameMap;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 public abstract class State {
 
@@ -53,5 +55,9 @@ public abstract class State {
 
     public Time getTime() {
         return time;
+    }
+
+    public Position getRandomPosition() {
+        return gameMap.getRandomPosition();
     }
 }
