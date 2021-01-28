@@ -1,5 +1,6 @@
 package entity;
 
+import core.Size;
 import display.Display;
 import input.Input;
 import state.GameState;
@@ -17,8 +18,8 @@ public class Game {
 
     public Game(int width, int height) {
         input = new Input();
-        state = new GameState(input);
         this.display = new Display(width, height, input);
+        state = new GameState(new Size(width, height), input);
     }
 
     public void render() {

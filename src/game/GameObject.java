@@ -21,4 +21,8 @@ public abstract class GameObject {
     public Position getPosition() {
         return position;
     }
+
+    public Size getSize() {
+        return size;
+    }
 }
