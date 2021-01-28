@@ -6,6 +6,7 @@ import core.Motion;
 import game.GameObject;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
+import state.State;
 
 import java.awt.*;
 
@@ -23,7 +24,7 @@ public abstract class MovingEntity extends GameObject {
         direction = Direction.S;
     }
 
-    public void update() {
+    public void update(State state) {
         motion.update(controller);
         position.apply(motion);
         manageDirection();

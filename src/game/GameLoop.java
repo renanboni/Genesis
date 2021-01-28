@@ -4,10 +4,13 @@ import entity.Game;
 
 public class GameLoop implements Runnable {
 
+    public static int UPDATES_PER_SECONDS = 60;
+
     private Game game;
 
     private boolean isRunning;
-    private final double updateRate = 1.0d / 60.d;
+
+    private double updateRate = 1.0d / UPDATES_PER_SECONDS;
 
     private long nextStatTime;
     private int fps, ups;
