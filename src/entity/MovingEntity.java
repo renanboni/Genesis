@@ -3,12 +3,15 @@ package entity;
 import controller.Controller;
 import core.Direction;
 import core.Motion;
+import entity.effect.Effect;
 import game.GameObject;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
 import state.State;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class MovingEntity extends GameObject {
 
@@ -16,20 +19,35 @@ public abstract class MovingEntity extends GameObject {
     protected Motion motion;
     protected AnimationManager animationManager;
     protected Direction direction;
+    protected List<Effect> effects;
 
     public MovingEntity(Controller controller, SpriteLibrary spriteLibrary) {
         super();
         this.controller = controller;
         this.motion = new Motion(2);
         direction = Direction.S;
+        effects = new ArrayList<>();
     }
 
     public void update(State state) {
         motion.update(controller);
-        position.apply(motion);
+        animationManager.update(direction);
+
+        effects.forEach(effect -> effect.update(state, this));
+
         manageDirection();
         decideAnimation();
-        animationManager.update(direction);
+
+        position.apply(motion);
+
+        cleanUp();
+    }
+
+    private void cleanUp() {
+        List.copyOf(effects)
+                .stream()
+                .filter(Effect::shouldDelete)
+                .forEach(effects::remove);
     }
 
     private void decideAnimation() {
@@ -53,5 +71,9 @@ public abstract class MovingEntity extends GameObject {
 
     public Controller getController() {
         return controller;
+    }
+
+    public void multiplySpeed(double speedMultiplier) {
+        motion.multiply(speedMultiplier);
     }
 }
