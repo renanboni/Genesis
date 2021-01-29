@@ -22,10 +22,16 @@ public class GameState extends State {
 
     private void initializeCharacters() {
         Player player = new Player(new PlayerController(input), spriteLibrary);
-        NPC npc = new NPC(new NPCController(), spriteLibrary);
-        npc.setPosition(new Position(3 * Game.SPRITE_SIZE, 2 * Game.SPRITE_SIZE));
-
-        this.gameObjects.addAll(List.of(npc, player));
+        this.gameObjects.add(player);
         camera.focusOn(player);
+        initNPCs(200);
+    }
+
+    private void initNPCs(int amount) {
+        for (int i = 0; i < amount; i++) {
+            NPC npc = new NPC(new NPCController(), spriteLibrary);
+            npc.setPosition(gameMap.getRandomPosition());
+            this.gameObjects.add(npc);
+        }
     }
 }
