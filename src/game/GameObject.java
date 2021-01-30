@@ -1,5 +1,6 @@
 package game;
 
+import core.CollisionBox;
 import core.Position;
 import core.Size;
 import state.State;
@@ -16,6 +17,10 @@ public abstract class GameObject {
     }
 
     public abstract void update(State state);
+
+    public abstract CollisionBox getCollisionBox();
+
+    public abstract boolean collidesWith(GameObject other);
 
     public abstract Image getSprite();
 

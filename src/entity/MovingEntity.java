@@ -1,8 +1,7 @@
 package entity;
 
 import controller.Controller;
-import core.Direction;
-import core.Motion;
+import core.*;
 import entity.action.Action;
 import entity.action.Cough;
 import entity.effect.Effect;
@@ -25,6 +24,7 @@ public abstract class MovingEntity extends GameObject {
     protected Direction direction;
     protected List<Effect> effects;
     protected Optional<Action> action;
+    protected Size collisionBoxSize;
 
     public MovingEntity(Controller controller, SpriteLibrary spriteLibrary) {
         super();
@@ -33,6 +33,7 @@ public abstract class MovingEntity extends GameObject {
         direction = Direction.S;
         effects = new ArrayList<>();
         action = Optional.empty();
+        collisionBoxSize = new Size(16, 28);
     }
 
     public void update(State state) {
@@ -42,6 +43,7 @@ public abstract class MovingEntity extends GameObject {
 
         effects.forEach(effect -> effect.update(state, this));
 
+        handleCollisions(state);
         manageDirection();
         decideAnimation();
 
@@ -50,11 +52,17 @@ public abstract class MovingEntity extends GameObject {
         cleanUp();
     }
 
+    private void handleCollisions(State state) {
+        state.getCollidingGameObjects(this).forEach(this::handleCollision);
+    }
+
+    protected abstract void handleCollision(GameObject other);
+
     private void handleMotion() {
         if (action.isEmpty()) {
             motion.update(controller);
         } else {
-            motion.stop();
+            motion.stop(true, true);
         }
     }
 
@@ -90,12 +98,46 @@ public abstract class MovingEntity extends GameObject {
     }
 
     @Override
+    public boolean collidesWith(GameObject other) {
+        return getCollisionBox().collidesWith(other.getCollisionBox());
+    }
+
+    @Override
     public Image getSprite() {
         return animationManager.getSprite();
     }
 
     public Controller getController() {
         return controller;
+    }
+
+    @Override
+    public CollisionBox getCollisionBox() {
+        Position positionWithMotion = Position.copyOf(position);
+        positionWithMotion.apply(motion);
+
+        return new CollisionBox(new Rectangle(
+                positionWithMotion.intX(),
+                positionWithMotion.intY(),
+                collisionBoxSize.getWidth(),
+                collisionBoxSize.getHeight()
+        ));
+    }
+
+    protected boolean withCollideY(GameObject other) {
+        CollisionBox otherBox = other.getCollisionBox();
+        Position positionWithYApplied = Position.copyOf(position);
+        positionWithYApplied.applyY(motion);
+
+        return CollisionBox.of(positionWithYApplied, collisionBoxSize).collidesWith(otherBox);
+    }
+
+    protected boolean withCollideX(GameObject other) {
+        CollisionBox otherBox = other.getCollisionBox();
+        Position positionWithXApplied = Position.copyOf(position);
+        positionWithXApplied.applyX(motion);
+
+        return CollisionBox.of(positionWithXApplied, collisionBoxSize).collidesWith(otherBox);
     }
 
     public void multiplySpeed(double speedMultiplier) {

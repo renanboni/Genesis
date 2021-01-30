@@ -12,7 +12,7 @@ import map.GameMap;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
+import java.util.stream.Collectors;
 
 public abstract class State {
 
@@ -59,5 +59,12 @@ public abstract class State {
 
     public Position getRandomPosition() {
         return gameMap.getRandomPosition();
+    }
+
+    public List<GameObject> getCollidingGameObjects(GameObject gameObject) {
+        return gameObjects
+                .stream()
+                .filter(other -> other.collidesWith(gameObject))
+                .collect(Collectors.toList());
     }
 }

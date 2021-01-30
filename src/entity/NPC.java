@@ -2,6 +2,7 @@ package entity;
 
 import ai.AiManager;
 import controller.Controller;
+import game.GameObject;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
 import state.State;
@@ -20,5 +21,12 @@ public class NPC extends MovingEntity {
     public void update(State state) {
         super.update(state);
         manager.update(state, this);
+    }
+
+    @Override
+    protected void handleCollision(GameObject other) {
+        if (other instanceof Player) {
+            motion.stop(withCollideX(other), withCollideY(other));
+        }
     }
 }

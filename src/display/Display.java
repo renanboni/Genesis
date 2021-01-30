@@ -30,7 +30,7 @@ public class Display extends JFrame {
         setVisible(true);
     }
 
-    public void render(State state) {
+    public void render(State state, boolean debugMode) {
         BufferStrategy bufferStrategy = canvas.getBufferStrategy();
         Graphics graphics = bufferStrategy.getDrawGraphics();
 
@@ -38,6 +38,10 @@ public class Display extends JFrame {
         graphics.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         Renderer.render(state, graphics);
+
+        if (debugMode) {
+            DebugRenderer.render(state, graphics);
+        }
 
         graphics.dispose();
 
