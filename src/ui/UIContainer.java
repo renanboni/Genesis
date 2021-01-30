@@ -7,10 +7,14 @@ import state.State;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
-public class UIContainer extends UiComponent {
+public abstract class UIContainer extends UiComponent {
 
-    private Color backgroundColor;
+    protected Color backgroundColor;
+
+    protected List<UiComponent> children = new ArrayList<>();
 
     public UIContainer() {
         super();
@@ -19,12 +23,19 @@ public class UIContainer extends UiComponent {
         calculatePosition();
     }
 
+    protected abstract Size calculateContentSize();
+
+    protected abstract void calculateContentPosition();
+
     private void calculateSize() {
-        size = new Size(padding.getHorizontal(), padding.getVertical());
+        Size calculatedContentSize = calculateContentSize();
+        size = new Size(padding.getHorizontal() + calculatedContentSize.getWidth(),
+                padding.getVertical() + calculatedContentSize.getHeight());
     }
 
     private void calculatePosition() {
         position = new Position(margin.getLeft(), margin.getTop());
+        calculateContentPosition();
     }
 
     @Override
@@ -35,13 +46,29 @@ public class UIContainer extends UiComponent {
         graphics2D.setColor(backgroundColor);
         graphics2D.fillRect(0, 0, size.getWidth(), size.getHeight());
 
+        children.forEach(uiComponent -> graphics2D.drawImage(
+                uiComponent.getSprite(),
+                uiComponent.getPosition().intX(),
+                uiComponent.getPosition().intY(),
+                null
+        ));
+
         graphics2D.dispose();
         return image;
     }
 
     @Override
     public void update(State state) {
+        children.forEach(uiComponent -> uiComponent.update(state));
         calculateSize();
         calculatePosition();
+    }
+
+    public void addUiComponent(UiComponent component) {
+        children.add(component);
+    }
+
+    public void setBackgroundColor(Color color) {
+        backgroundColor = color;
     }
 }
