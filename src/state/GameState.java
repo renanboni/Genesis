@@ -8,10 +8,7 @@ import entity.Player;
 import entity.effect.Sick;
 import input.Input;
 import map.GameMap;
-import ui.HorizontalContainer;
-import ui.Spacing;
-import ui.UIContainer;
-import ui.VerticalContainer;
+import ui.*;
 
 import java.awt.*;
 
@@ -30,7 +27,7 @@ public class GameState extends State {
         container.setBackgroundColor(Color.GRAY);
 
         container.addUiComponent(new HorizontalContainer());
-        container.addUiComponent(new HorizontalContainer());
+        container.addUiComponent(new UiText("Hello World"));
         container.addUiComponent(new HorizontalContainer());
 
         uiContainers.add(container);
