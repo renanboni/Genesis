@@ -11,6 +11,20 @@ public class Renderer {
 
     public static void render(State state, Graphics graphics) {
         renderMap(state, graphics);
+        renderGameObjects(state, graphics);
+        renderUi(state, graphics);
+    }
+
+    private static void renderUi(State state, Graphics graphics) {
+        state.getUiContainers().forEach(uiContainer -> graphics.drawImage(
+                uiContainer.getSprite(),
+                uiContainer.getPosition().intX(),
+                uiContainer.getPosition().intY(),
+                null
+        ));
+    }
+
+    private static void renderGameObjects(State state, Graphics graphics) {
         Camera camera = state.getCamera();
 
         state.getGameObjects()
