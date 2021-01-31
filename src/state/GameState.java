@@ -18,17 +18,14 @@ public class GameState extends State {
         this.gameMap = new GameMap(new Size(20, 20), spriteLibrary);
 
         initializeCharacters();
-        initializeUi();
+        initializeUi(windowSize);
     }
 
-    private void initializeUi() {
-        UIContainer container = new VerticalContainer();
-        container.setPadding(new Spacing(50));
+    private void initializeUi(Size windowSize) {
+        UIContainer container = new VerticalContainer(windowSize);
+        container.setPadding(new Spacing(5));
         container.setBackgroundColor(Color.GRAY);
-
-        container.addUiComponent(new HorizontalContainer());
-        container.addUiComponent(new UiText("Hello World"));
-        container.addUiComponent(new HorizontalContainer());
+        container.addUiComponent(new UiText("Genesis"));
 
         uiContainers.add(container);
     }
