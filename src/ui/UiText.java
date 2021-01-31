@@ -59,11 +59,21 @@ public class UiText extends UiComponent {
 
     private void calculateSize() {
         FontMetrics metrics = new Canvas().getFontMetrics(font);
-        size = new Size(metrics.stringWidth(text) + padding.getHorizontal(),
-                metrics.getHeight() + padding.getVertical());
+        int width = metrics.stringWidth(text) + padding.getHorizontal();
+        int height = metrics.getHeight() + padding.getVertical();
+
+        if (dropShadow) {
+            width += dropShadowOffset;
+        }
+
+        size = new Size(width, height);
     }
 
     private void createFont() {
         font = new Font(fontFamily, fontStyle, fontSize);
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }

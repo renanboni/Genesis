@@ -6,11 +6,9 @@ import core.Size;
 import entity.NPC;
 import entity.Player;
 import entity.effect.Sick;
+import game.ui.UiGameTime;
 import input.Input;
 import map.GameMap;
-import ui.*;
-
-import java.awt.*;
 
 public class GameState extends State {
     public GameState(Size windowSize, Input input) {
@@ -22,12 +20,7 @@ public class GameState extends State {
     }
 
     private void initializeUi(Size windowSize) {
-        UIContainer container = new VerticalContainer(windowSize);
-        container.setPadding(new Spacing(5));
-        container.setBackgroundColor(Color.GRAY);
-        container.addUiComponent(new UiText("Genesis"));
-
-        uiContainers.add(container);
+        uiContainers.add(new UiGameTime(windowSize));
     }
 
     private void initializeCharacters() {

@@ -16,9 +16,14 @@ public abstract class UIContainer extends UiComponent {
 
     protected List<UiComponent> children = new ArrayList<>();
 
-    public UIContainer() {
+    protected Alignment alignment;
+    protected Size windowSize;
+
+    public UIContainer(Size windowSize) {
         super();
-        backgroundColor = Color.RED;
+        backgroundColor = new Color(0, 0, 0, 0);
+        this.windowSize = windowSize;
+        alignment = new Alignment(Alignment.Position.START, Alignment.Position.START);
         padding = new Spacing(5);
         margin = new Spacing(5);
         calculateSize();
@@ -36,7 +41,27 @@ public abstract class UIContainer extends UiComponent {
     }
 
     private void calculatePosition() {
-        position = new Position(margin.getLeft(), margin.getTop());
+        int x = padding.getLeft();
+
+        if (alignment.getHorizontal().equals(Alignment.Position.CENTER)) {
+            x = windowSize.getWidth() / 2 - size.getWidth() / 2;
+        }
+
+        if (alignment.getHorizontal().equals(Alignment.Position.END)) {
+            x = windowSize.getWidth() - size.getWidth() - margin.getRight();
+        }
+
+        int y = padding.getTop();
+
+        if (alignment.getVertical().equals(Alignment.Position.CENTER)) {
+            y = windowSize.getHeight() / 2 - size.getHeight() / 2;
+        }
+
+        if (alignment.getVertical().equals(Alignment.Position.END)) {
+            y = windowSize.getHeight() - size.getHeight() - margin.getBottom();
+        }
+
+        this.position = new Position(x, y);
         calculateContentPosition();
     }
 
@@ -72,5 +97,13 @@ public abstract class UIContainer extends UiComponent {
 
     public void setBackgroundColor(Color color) {
         backgroundColor = color;
+    }
+
+    public void setAlignment(Alignment alignment) {
+        this.alignment = alignment;
+    }
+
+    public Alignment getAlignment() {
+        return alignment;
     }
 }
