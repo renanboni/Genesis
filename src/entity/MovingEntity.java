@@ -151,4 +151,8 @@ public abstract class MovingEntity extends GameObject {
     public void addEffect(Effect effect) {
         effects.add(effect);
     }
+
+    public boolean isAffectedBy(Class<?> clazz) {
+        return effects.stream().anyMatch(clazz::isInstance);
+    }
 }

@@ -7,6 +7,7 @@ import entity.NPC;
 import entity.Player;
 import entity.effect.Sick;
 import game.ui.UiGameTime;
+import game.ui.UiSicknessStatistics;
 import input.Input;
 import map.GameMap;
 
@@ -21,6 +22,7 @@ public class GameState extends State {
 
     private void initializeUi(Size windowSize) {
         uiContainers.add(new UiGameTime(windowSize));
+        uiContainers.add(new UiSicknessStatistics(windowSize));
     }
 
     private void initializeCharacters() {
