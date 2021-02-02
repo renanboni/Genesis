@@ -1,0 +1,21 @@
+package controller;
+
+import entity.Game;
+import input.Input;
+
+import java.awt.event.KeyEvent;
+
+public class GameController {
+
+    private Input input;
+
+    public GameController(Input input) {
+        this.input = input;
+    }
+
+    public void update(Game game) {
+        if (input.isPressed(KeyEvent.VK_F2)) {
+            game.getSettings().toggleDebugMode();
+        }
+    }
+}

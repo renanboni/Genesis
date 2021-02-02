@@ -29,14 +29,22 @@ public class GameState extends State {
         Player player = new Player(new PlayerController(input), spriteLibrary);
         this.gameObjects.add(player);
         camera.focusOn(player);
-        initNPCs(50);
+
+        initNPCs(200);
+        makeNumberOfNpcsSick(10);
+    }
+
+    private void makeNumberOfNpcsSick(int number) {
+        getGameObjectOfClass(NPC.class)
+                .stream()
+                .limit(number)
+                .forEach(npc -> npc.addEffect(new Sick()));
     }
 
     private void initNPCs(int amount) {
         for (int i = 0; i < amount; i++) {
             NPC npc = new NPC(new NPCController(), spriteLibrary);
             npc.setPosition(gameMap.getRandomPosition());
-            npc.addEffect(new Sick());
             this.gameObjects.add(npc);
         }
     }

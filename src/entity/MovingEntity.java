@@ -1,11 +1,9 @@
 package entity;
 
-import controller.Controller;
+import controller.EntityController;
 import core.*;
 import entity.action.Action;
-import entity.action.Cough;
 import entity.effect.Effect;
-import entity.effect.Sick;
 import game.GameObject;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
@@ -18,7 +16,7 @@ import java.util.Optional;
 
 public abstract class MovingEntity extends GameObject {
 
-    protected Controller controller;
+    protected EntityController entityController;
     protected Motion motion;
     protected AnimationManager animationManager;
     protected Direction direction;
@@ -26,9 +24,9 @@ public abstract class MovingEntity extends GameObject {
     protected Optional<Action> action;
     protected Size collisionBoxSize;
 
-    public MovingEntity(Controller controller, SpriteLibrary spriteLibrary) {
+    public MovingEntity(EntityController controller, SpriteLibrary spriteLibrary) {
         super();
-        this.controller = controller;
+        this.entityController = controller;
         this.motion = new Motion(2);
         direction = Direction.S;
         effects = new ArrayList<>();
@@ -60,7 +58,7 @@ public abstract class MovingEntity extends GameObject {
 
     private void handleMotion() {
         if (action.isEmpty()) {
-            motion.update(controller);
+            motion.update(entityController);
         } else {
             motion.stop(true, true);
         }
@@ -107,8 +105,8 @@ public abstract class MovingEntity extends GameObject {
         return animationManager.getSprite();
     }
 
-    public Controller getController() {
-        return controller;
+    public EntityController getController() {
+        return entityController;
     }
 
     @Override

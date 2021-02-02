@@ -11,4 +11,8 @@ public class GameSettings {
     public boolean isDebugMode() {
         return debugMode;
     }
+
+    public void toggleDebugMode() {
+        debugMode = !debugMode;
+    }
 }
