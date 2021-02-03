@@ -1,8 +1,7 @@
 package entity;
 
 import controller.EntityController;
-import core.Position;
-import entity.effect.Caffeinated;
+import entity.humanoid.Humanoid;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
 import state.State;
@@ -10,7 +9,7 @@ import state.State;
 import java.util.Comparator;
 import java.util.Optional;
 
-public class Player extends MovingEntity {
+public class Player extends Humanoid {
 
     private NPC target;
     private double targetRange;
@@ -18,7 +17,7 @@ public class Player extends MovingEntity {
 
     public Player(EntityController controller, SpriteLibrary spriteLibrary, SelectionCircle selectionCircle) {
         super(controller, spriteLibrary);
-        this.animationManager = new AnimationManager(spriteLibrary.getUnit("dave"));
+        this.animationManager = new AnimationManager(spriteLibrary.getSpriteSet("dave"));
         this.targetRange = Game.SPRITE_SIZE;
         this.selectionCircle = selectionCircle;
     }

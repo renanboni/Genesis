@@ -1,6 +1,6 @@
 package entity.effect;
 
-import entity.MovingEntity;
+import entity.humanoid.Humanoid;
 import game.GameLoop;
 import state.State;
 
@@ -13,9 +13,9 @@ public class Caffeinated extends Effect {
     }
 
     @Override
-    public void update(State state, MovingEntity movingEntity) {
-        super.update(state, movingEntity);
+    public void update(State state, Humanoid humanoid) {
+        super.update(state, humanoid);
 
-        movingEntity.multiplySpeed(speedMultiplier);
+        humanoid.multiplySpeed(speedMultiplier);
     }
 }

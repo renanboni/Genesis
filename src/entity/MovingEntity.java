@@ -2,16 +2,10 @@ package entity;
 
 import controller.EntityController;
 import core.*;
-import entity.action.Action;
-import entity.effect.Effect;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
 import state.State;
-
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 public abstract class MovingEntity extends GameObject {
 
@@ -19,8 +13,7 @@ public abstract class MovingEntity extends GameObject {
     protected Motion motion;
     protected AnimationManager animationManager;
     protected Direction direction;
-    protected List<Effect> effects;
-    protected Optional<Action> action;
+
     protected Size collisionBoxSize;
     protected Vector2D directionVector;
 
@@ -30,27 +23,18 @@ public abstract class MovingEntity extends GameObject {
         motion = new Motion(2);
         direction = Direction.S;
         directionVector = new Vector2D(0, 0);
-        effects = new ArrayList<>();
-        action = Optional.empty();
-        collisionBoxSize = new Size(16, 28);
-        renderOffset = new Position(size.getWidth() / 2, size.getHeight() - 12);
-        collisionBoxOffset = new Position(collisionBoxSize.getWidth() / 2, collisionBoxSize.getHeight());
     }
 
     public void update(State state) {
-        handleAction(state);
+        motion.update(entityController);
         handleMotion();
         animationManager.update(direction);
 
-        effects.forEach(effect -> effect.update(state, this));
-
         handleCollisions(state);
         manageDirection();
-        decideAnimation();
+        animationManager.playAnimation(decideAnimation());
 
         position.apply(motion);
-
-        cleanUp();
     }
 
     protected boolean isFacing(Position other) {
@@ -66,38 +50,9 @@ public abstract class MovingEntity extends GameObject {
 
     protected abstract void handleCollision(GameObject other);
 
-    private void handleMotion() {
-        if (action.isEmpty()) {
-            motion.update(entityController);
-        } else {
-            motion.stop(true, true);
-        }
-    }
+    protected abstract void handleMotion();
 
-    private void handleAction(State state) {
-        action.ifPresent(value -> value.update(state, this));
-    }
-
-    private void cleanUp() {
-        List.copyOf(effects)
-                .stream()
-                .filter(Effect::shouldDelete)
-                .forEach(effects::remove);
-
-        if (action.isPresent() && action.get().isDone()) {
-            action = Optional.empty();
-        }
-    }
-
-    private void decideAnimation() {
-        if (action.isPresent()) {
-            animationManager.playAnimation(action.get().getAnimationName());
-        } else if (motion.isMoving()) {
-            animationManager.playAnimation("walk");
-        } else {
-            animationManager.playAnimation("stand");
-        }
-    }
+    protected abstract String decideAnimation();
 
     private void manageDirection() {
         if (motion.isMoving()) {
@@ -149,17 +104,5 @@ public abstract class MovingEntity extends GameObject {
 
     public void multiplySpeed(double speedMultiplier) {
         motion.multiply(speedMultiplier);
-    }
-
-    public void perform(Action action) {
-        this.action = Optional.of(action);
-    }
-
-    public void addEffect(Effect effect) {
-        effects.add(effect);
-    }
-
-    public boolean isAffectedBy(Class<?> clazz) {
-        return effects.stream().anyMatch(clazz::isInstance);
     }
 }
