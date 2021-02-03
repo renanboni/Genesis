@@ -2,7 +2,6 @@ package entity;
 
 import controller.EntityController;
 import entity.effect.Caffeinated;
-import game.GameObject;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
 

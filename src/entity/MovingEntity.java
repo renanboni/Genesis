@@ -4,7 +4,6 @@ import controller.EntityController;
 import core.*;
 import entity.action.Action;
 import entity.effect.Effect;
-import game.GameObject;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
 import state.State;
@@ -32,6 +31,7 @@ public abstract class MovingEntity extends GameObject {
         effects = new ArrayList<>();
         action = Optional.empty();
         collisionBoxSize = new Size(16, 28);
+        this.renderOffset = new Position(size.getWidth() / 2, size.getHeight() - 12);
     }
 
     public void update(State state) {
@@ -96,11 +96,6 @@ public abstract class MovingEntity extends GameObject {
     }
 
     @Override
-    public boolean collidesWith(GameObject other) {
-        return getCollisionBox().collidesWith(other.getCollisionBox());
-    }
-
-    @Override
     public Image getSprite() {
         return animationManager.getSprite();
     }
@@ -111,12 +106,12 @@ public abstract class MovingEntity extends GameObject {
 
     @Override
     public CollisionBox getCollisionBox() {
-        Position positionWithMotion = Position.copyOf(position);
+        Position positionWithMotion = Position.copyOf(getPosition());
         positionWithMotion.apply(motion);
 
         return new CollisionBox(new Rectangle(
-                positionWithMotion.intX(),
-                positionWithMotion.intY(),
+                positionWithMotion.intX() - collisionBoxSize.getWidth() / 2,
+                positionWithMotion.intY() - collisionBoxSize.getHeight(),
                 collisionBoxSize.getWidth(),
                 collisionBoxSize.getHeight()
         ));

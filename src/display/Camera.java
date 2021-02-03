@@ -3,7 +3,7 @@ package display;
 import core.Position;
 import core.Size;
 import entity.Game;
-import game.GameObject;
+import entity.GameObject;
 import state.State;
 
 import java.awt.*;

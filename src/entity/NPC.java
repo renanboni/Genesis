@@ -2,7 +2,6 @@ package entity;
 
 import ai.AiManager;
 import controller.EntityController;
-import game.GameObject;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
 import state.State;

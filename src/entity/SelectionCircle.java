@@ -1,6 +1,7 @@
 package entity;
 
 import core.CollisionBox;
+import core.Position;
 import core.Size;
 import gfx.ImageUtils;
 import state.State;
@@ -16,6 +17,8 @@ public class SelectionCircle extends GameObject {
     public SelectionCircle() {
         color = Color.ORANGE;
         size = new Size(32, 32);
+        renderOffset = new Position(size.getWidth() / 2, size.getHeight());
+        renderOrder = 4;
         initSprites();
     }
 
@@ -27,8 +30,8 @@ public class SelectionCircle extends GameObject {
     @Override
     public CollisionBox getCollisionBox() {
         return CollisionBox.of(
-                position,
-                size
+                getPosition(),
+                getSize()
         );
     }
 

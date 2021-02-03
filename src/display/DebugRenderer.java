@@ -1,7 +1,7 @@
 package display;
 
 import core.CollisionBox;
-import game.GameObject;
+import entity.GameObject;
 import state.State;
 
 import java.awt.*;
