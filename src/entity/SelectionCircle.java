@@ -18,6 +18,7 @@ public class SelectionCircle extends GameObject {
         color = Color.ORANGE;
         size = new Size(32, 32);
         renderOffset = new Position(size.getWidth() / 2, size.getHeight());
+        collisionBoxOffset = renderOffset;
         renderOrder = 4;
         initSprites();
     }
@@ -29,15 +30,18 @@ public class SelectionCircle extends GameObject {
 
     @Override
     public CollisionBox getCollisionBox() {
+        Position position = getPosition();
+        position.subtract(collisionBoxOffset);
+
         return CollisionBox.of(
-                getPosition(),
+                position,
                 getSize()
         );
     }
 
     @Override
     public Image getSprite() {
-        return sprite;
+        return parent != null ? sprite : null;
     }
 
     private void initSprites() {

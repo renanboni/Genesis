@@ -22,16 +22,19 @@ public abstract class MovingEntity extends GameObject {
     protected List<Effect> effects;
     protected Optional<Action> action;
     protected Size collisionBoxSize;
+    protected Vector2D directionVector;
 
     public MovingEntity(EntityController controller, SpriteLibrary spriteLibrary) {
         super();
-        this.entityController = controller;
-        this.motion = new Motion(2);
+        entityController = controller;
+        motion = new Motion(2);
         direction = Direction.S;
+        directionVector = new Vector2D(0, 0);
         effects = new ArrayList<>();
         action = Optional.empty();
         collisionBoxSize = new Size(16, 28);
-        this.renderOffset = new Position(size.getWidth() / 2, size.getHeight() - 12);
+        renderOffset = new Position(size.getWidth() / 2, size.getHeight() - 12);
+        collisionBoxOffset = new Position(collisionBoxSize.getWidth() / 2, collisionBoxSize.getHeight());
     }
 
     public void update(State state) {
@@ -48,6 +51,13 @@ public abstract class MovingEntity extends GameObject {
         position.apply(motion);
 
         cleanUp();
+    }
+
+    protected boolean isFacing(Position other) {
+        Vector2D direction = Vector2D.directionBetweenPositions(other, getPosition());
+        double dotProduct = Vector2D.dotProduct(direction, directionVector);
+
+        return dotProduct > 0;
     }
 
     private void handleCollisions(State state) {
@@ -92,6 +102,7 @@ public abstract class MovingEntity extends GameObject {
     private void manageDirection() {
         if (motion.isMoving()) {
             this.direction = Direction.fromMotion(motion);
+            this.directionVector = motion.getDirection();
         }
     }
 
@@ -108,29 +119,32 @@ public abstract class MovingEntity extends GameObject {
     public CollisionBox getCollisionBox() {
         Position positionWithMotion = Position.copyOf(getPosition());
         positionWithMotion.apply(motion);
+        positionWithMotion.subtract(collisionBoxOffset);
 
         return new CollisionBox(new Rectangle(
-                positionWithMotion.intX() - collisionBoxSize.getWidth() / 2,
-                positionWithMotion.intY() - collisionBoxSize.getHeight(),
+                positionWithMotion.intX(),
+                positionWithMotion.intY(),
                 collisionBoxSize.getWidth(),
                 collisionBoxSize.getHeight()
         ));
-    }
-
-    protected boolean withCollideY(GameObject other) {
-        CollisionBox otherBox = other.getCollisionBox();
-        Position positionWithYApplied = Position.copyOf(position);
-        positionWithYApplied.applyY(motion);
-
-        return CollisionBox.of(positionWithYApplied, collisionBoxSize).collidesWith(otherBox);
     }
 
     protected boolean withCollideX(GameObject other) {
         CollisionBox otherBox = other.getCollisionBox();
         Position positionWithXApplied = Position.copyOf(position);
         positionWithXApplied.applyX(motion);
+        positionWithXApplied.subtract(collisionBoxOffset);
 
         return CollisionBox.of(positionWithXApplied, collisionBoxSize).collidesWith(otherBox);
+    }
+
+    protected boolean withCollideY(GameObject other) {
+        CollisionBox otherBox = other.getCollisionBox();
+        Position positionWithYApplied = Position.copyOf(position);
+        positionWithYApplied.applyY(motion);
+        positionWithYApplied.subtract(collisionBoxOffset);
+
+        return CollisionBox.of(positionWithYApplied, collisionBoxSize).collidesWith(otherBox);
     }
 
     public void multiplySpeed(double speedMultiplier) {

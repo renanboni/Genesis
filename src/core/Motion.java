@@ -54,4 +54,11 @@ public class Motion {
                 stopY ? 0 : vector.getX()
         );
     }
+
+    public Vector2D getDirection() {
+        Vector2D direction = Vector2D.copyOf(vector);
+        direction.normalize();
+
+        return direction;
+    }
 }

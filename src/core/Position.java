@@ -67,4 +67,16 @@ public class Position {
         x += position.getX();
         y += position.getY();
     }
+
+    public void subtract(Position position) {
+        x -= position.getX();
+        y -= position.getY();
+    }
+
+    public double distanceTo(Position other) {
+        double deltaX = getX() - other.getX();
+        double deltaY = getY() - other.getY();
+
+        return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    }
 }
