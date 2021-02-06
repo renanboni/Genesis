@@ -3,6 +3,7 @@ package state;
 import core.Position;
 import core.Size;
 import display.Camera;
+import entity.Bubble;
 import entity.GameObject;
 import game.Time;
 import gfx.SpriteLibrary;
@@ -37,9 +38,15 @@ public abstract class State {
     public void update() {
         time.update();
         sortObjectsByPosition();
-        gameObjects.forEach(gameObject -> gameObject.update(this));
+        updateGameObjects();
         uiContainers.forEach(uiContainer -> uiContainer.update(this));
         camera.update(this);
+    }
+
+    private void updateGameObjects() {
+        for (int i = 0; i < gameObjects.size(); i++) {
+            gameObjects.get(i).update(this);
+        }
     }
 
     private void sortObjectsByPosition() {
@@ -83,5 +90,13 @@ public abstract class State {
                 .filter(clazz::isInstance)
                 .map(gameObject -> (T) gameObject)
                 .collect(Collectors.toList());
+    }
+
+    public SpriteLibrary getSpriteLibrary() {
+        return spriteLibrary;
+    }
+
+    public void spawn(GameObject gameObject) {
+        gameObjects.add(gameObject);
     }
 }

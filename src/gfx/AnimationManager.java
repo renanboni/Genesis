@@ -14,22 +14,33 @@ public class AnimationManager {
     private int frameIndex;
     private int directionIndex;
     private String currentAnimationName;
+    private final boolean isLooping;
 
     public AnimationManager(SpriteSet spriteSet) {
+        this(spriteSet, true);
+    }
+
+    public AnimationManager(SpriteSet spriteSet, boolean isLooping) {
         this.spriteSet = spriteSet;
         this.updatesPerFrame = 20;
         this.frameIndex = 0;
         this.currentFrameTime = 0;
         this.directionIndex = 0;
         this.currentAnimationName = "";
+        this.isLooping = isLooping;
         playAnimation("stand");
     }
 
     public Image getSprite() {
-        return currentAnimationSheet.getSubimage(frameIndex * Game.SPRITE_SIZE,
-                directionIndex * Game.SPRITE_SIZE,
-                Game.SPRITE_SIZE,
-                Game.SPRITE_SIZE);
+        try {
+            return currentAnimationSheet.getSubimage(frameIndex * Game.SPRITE_SIZE,
+                    directionIndex * Game.SPRITE_SIZE,
+                    Game.SPRITE_SIZE,
+                    Game.SPRITE_SIZE);
+        } catch (NullPointerException e) {
+            System.out.println(this);
+            return null;
+        }
     }
 
     public void update(Direction direction) {
@@ -40,15 +51,16 @@ public class AnimationManager {
             currentFrameTime = 0;
             frameIndex++;
 
-            if (frameIndex >= currentAnimationSheet.getWidth() / Game.SPRITE_SIZE) {
-                frameIndex = 0;
+            int animationSize = currentAnimationSheet.getWidth() / Game.SPRITE_SIZE;
+            if (frameIndex >= animationSize) {
+                frameIndex = isLooping ? 0 : animationSize - 1;
             }
         }
     }
 
     public void playAnimation(String name) {
         if (!name.equals(currentAnimationName)) {
-            this.currentAnimationSheet = (BufferedImage) spriteSet.get(name);
+            this.currentAnimationSheet = (BufferedImage) spriteSet.getOrGetDefault(name);
             currentAnimationName = name;
             frameIndex = 0;
         }

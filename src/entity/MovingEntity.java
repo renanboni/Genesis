@@ -23,6 +23,7 @@ public abstract class MovingEntity extends GameObject {
         motion = new Motion(2);
         direction = Direction.S;
         directionVector = new Vector2D(0, 0);
+        collisionBoxSize = new Size(size.getWidth(), size.getHeight());
     }
 
     public void update(State state) {

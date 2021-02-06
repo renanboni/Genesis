@@ -6,11 +6,11 @@ public class GameLoop implements Runnable {
 
     public static int UPDATES_PER_SECONDS = 60;
 
-    private Game game;
+    private final Game game;
 
     private boolean isRunning;
 
-    private double updateRate = 1.0d / UPDATES_PER_SECONDS;
+    private final double updateRate = 1.0d / UPDATES_PER_SECONDS;
 
     private long nextStatTime;
     private int fps, ups;

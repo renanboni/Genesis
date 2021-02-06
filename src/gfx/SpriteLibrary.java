@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class SpriteLibrary {
 
-    private Map<String, SpriteSet> spriteSets = new HashMap<>();
-    private Map<String, Image> images = new HashMap<>();
+    private final Map<String, SpriteSet> spriteSets = new HashMap<>();
+    private final Map<String, Image> images = new HashMap<>();
 
     public SpriteLibrary() {
         loadSpritesFromDisk();
