@@ -61,4 +61,8 @@ public class Motion {
 
         return direction;
     }
+
+    public void add(Vector2D vector2D) {
+        this.vector.add(vector2D);
+    }
 }

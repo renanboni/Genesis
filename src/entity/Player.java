@@ -1,7 +1,7 @@
 package entity;
 
 import controller.EntityController;
-import entity.effect.Untargetable;
+import entity.effect.Isolated;
 import entity.humanoid.action.BlowBubble;
 import entity.humanoid.Humanoid;
 import gfx.AnimationManager;
@@ -61,7 +61,7 @@ public class Player extends Humanoid {
                 .stream()
                 .filter(npc -> getPosition().distanceTo(npc.getPosition()) < targetRange)
                 .filter(npc -> isFacing(npc.getPosition()))
-                .filter(npc -> !npc.isAffectedBy(Untargetable.class))
+                .filter(npc -> !npc.isAffectedBy(Isolated.class))
                 .min(Comparator.comparingDouble(npc -> position.distanceTo(npc.getPosition())));
     }
 

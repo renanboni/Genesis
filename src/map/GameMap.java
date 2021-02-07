@@ -12,7 +12,7 @@ public class GameMap {
 
     private static final int SAFETY_SPACE = 2;
 
-    private Tile[][] tiles;
+    private final Tile[][] tiles;
 
     public GameMap(Size size, SpriteLibrary spriteLibrary) {
         tiles = new Tile[size.getWidth()][size.getHeight()];
