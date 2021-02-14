@@ -9,14 +9,18 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
     private final boolean[] currentlyPressed;
     private final boolean[] pressed;
 
-    private Position pointerPosition;
+    private Position mousePosition;
     private boolean mouseClicked;
     private boolean mousePressed;
 
     public Input() {
         currentlyPressed = new boolean[255];
         pressed = new boolean[255];
-        pointerPosition = new Position(0, 0);
+        mousePosition = new Position(0, 0);
+    }
+
+    public void clearMouseClick() {
+        mouseClicked = false;
     }
 
     public boolean isCurrentlyPressed(int keyCode) {
@@ -47,12 +51,12 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-
+        mousePosition = new Position(e.getPoint().getX(), e.getPoint().getY());
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        mousePosition = new Position(e.getPoint().getX(), e.getPoint().getY());
     }
 
     @Override
@@ -76,7 +80,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
     public void mouseExited(MouseEvent e) { }
 
     public Position getPointerPosition() {
-        return pointerPosition;
+        return mousePosition;
     }
 
     public boolean isMouseClicked() {

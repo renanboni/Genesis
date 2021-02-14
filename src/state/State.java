@@ -3,7 +3,6 @@ package state;
 import core.Position;
 import core.Size;
 import display.Camera;
-import entity.Bubble;
 import entity.GameObject;
 import game.Time;
 import gfx.SpriteLibrary;
@@ -41,6 +40,15 @@ public abstract class State {
         updateGameObjects();
         uiContainers.forEach(uiContainer -> uiContainer.update(this));
         camera.update(this);
+        handleMouseInput();
+    }
+
+    private void handleMouseInput() {
+        if (input.isMouseClicked()) {
+            System.out.printf("MOUSE CLICKED AT POSITION: x:%d y:%d\n", input.getPointerPosition().intX(), input.getPointerPosition().intY());
+        }
+
+        input.clearMouseClick();
     }
 
     private void updateGameObjects() {
