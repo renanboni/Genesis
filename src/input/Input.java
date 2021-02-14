@@ -79,7 +79,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
     @Override
     public void mouseExited(MouseEvent e) { }
 
-    public Position getPointerPosition() {
+    public Position getMousePosition() {
         return mousePosition;
     }
 

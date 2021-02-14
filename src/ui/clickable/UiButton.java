@@ -1,0 +1,55 @@
+package ui.clickable;
+
+import core.Size;
+import state.State;
+import ui.UIContainer;
+import ui.UiText;
+import ui.VerticalContainer;
+
+import java.awt.*;
+
+public class UiButton extends UiClickable {
+
+    private UIContainer container;
+    private UiText label;
+
+    private Runnable clickEvent;
+
+    public UiButton(String label, Runnable clickEvent) {
+        this.label = new UiText(label);
+        this.clickEvent = clickEvent;
+
+        container = new VerticalContainer(new Size(0, 0));
+        container.addUiComponent(this.label);
+        container.setFixedSize(new Size(150, 40));
+    }
+
+    @Override
+    public void update(State state) {
+        super.update(state);
+        container.update(state);
+        size = container.getSize();
+
+        Color color = Color.GRAY;
+
+        if (hasFocus) {
+            color = Color.LIGHT_GRAY;
+        }
+
+        if (isPressed) {
+            color = Color.DARK_GRAY;
+        }
+
+        container.setBackgroundColor(color);
+    }
+
+    @Override
+    protected void onClick() {
+        clickEvent.run();
+    }
+
+    @Override
+    public Image getSprite() {
+        return container.getSprite();
+    }
+}

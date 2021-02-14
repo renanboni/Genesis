@@ -17,7 +17,9 @@ import map.GameMap;
 import ui.Alignment;
 import ui.UiText;
 import ui.VerticalContainer;
+import ui.clickable.UiButton;
 
+import java.awt.*;
 import java.util.List;
 
 public class GameState extends State {
@@ -58,7 +60,10 @@ public class GameState extends State {
 
         VerticalContainer container = new VerticalContainer(camera.getSize());
         container.setAlignment(new Alignment(Alignment.Position.CENTER, Alignment.Position.CENTER));
-        container.addUiComponent(new UiText("VICTORY!"));
+        container.setBackgroundColor(Color.DARK_GRAY);
+        container.addUiComponent(new UiButton("Menu", () -> System.out.println("Button 1 pressed")));
+        container.addUiComponent(new UiButton("Options", () -> System.out.println("Button 1 pressed")));
+        container.addUiComponent(new UiButton("Exit", () -> System.out.println("Button 1 pressed")));
 
         uiContainers.add(container);
     }
@@ -74,7 +79,7 @@ public class GameState extends State {
     }
 
     private void initializeConditions() {
-        victoryConditions = List.of(() -> getNumberOfSick() == 0);
+        victoryConditions = List.of(() -> getNumberOfSick() > 0);
         defeatConditions = List.of(() -> (float) getNumberOfSick() / getNumberOfNpcs() > 0.25);
     }
 

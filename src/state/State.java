@@ -45,7 +45,7 @@ public abstract class State {
 
     private void handleMouseInput() {
         if (input.isMouseClicked()) {
-            System.out.printf("MOUSE CLICKED AT POSITION: x:%d y:%d\n", input.getPointerPosition().intX(), input.getPointerPosition().intY());
+            System.out.printf("MOUSE CLICKED AT POSITION: x:%d y:%d\n", input.getMousePosition().intX(), input.getMousePosition().intY());
         }
 
         input.clearMouseClick();
@@ -106,5 +106,9 @@ public abstract class State {
 
     public void spawn(GameObject gameObject) {
         gameObjects.add(gameObject);
+    }
+
+    public Input getInput() {
+        return input;
     }
 }
