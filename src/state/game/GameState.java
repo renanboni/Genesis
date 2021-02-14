@@ -1,4 +1,4 @@
-package state;
+package state.game;
 
 import controller.NPCController;
 import controller.PlayerController;
@@ -10,10 +10,13 @@ import entity.SelectionCircle;
 import entity.effect.Isolated;
 import entity.effect.Sick;
 import entity.humanoid.Humanoid;
-import game.ui.UiGameTime;
-import game.ui.UiSicknessStatistics;
+import game.Game;
+import state.game.ui.UiGameTime;
+import state.game.ui.UiSicknessStatistics;
 import input.Input;
 import map.GameMap;
+import state.State;
+import state.menu.MenuState;
 import ui.Alignment;
 import ui.UiText;
 import ui.VerticalContainer;
@@ -41,8 +44,8 @@ public class GameState extends State {
     }
 
     @Override
-    public void update() {
-        super.update();
+    public void update(Game game) {
+        super.update(game);
 
         if (isPlaying) {
             if (victoryConditions.stream().allMatch(Condition::isMet)) {
@@ -61,9 +64,9 @@ public class GameState extends State {
         VerticalContainer container = new VerticalContainer(camera.getSize());
         container.setAlignment(new Alignment(Alignment.Position.CENTER, Alignment.Position.CENTER));
         container.setBackgroundColor(Color.DARK_GRAY);
-        container.addUiComponent(new UiButton("Menu", () -> System.out.println("Button 1 pressed")));
-        container.addUiComponent(new UiButton("Options", () -> System.out.println("Button 1 pressed")));
-        container.addUiComponent(new UiButton("Exit", () -> System.out.println("Button 1 pressed")));
+        container.addUiComponent(new UiButton("Menu", (state) -> state.setNextState(new MenuState(windowsSize, input))));
+        container.addUiComponent(new UiButton("Options", (state) -> System.out.println("Button 1 pressed")));
+        container.addUiComponent(new UiButton("Exit", (state) -> System.out.println("Button 1 pressed")));
 
         uiContainers.add(container);
     }

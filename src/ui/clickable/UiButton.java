@@ -13,11 +13,11 @@ public class UiButton extends UiClickable {
     private UIContainer container;
     private UiText label;
 
-    private Runnable clickEvent;
+    private ClickAction clickAction;
 
-    public UiButton(String label, Runnable clickEvent) {
+    public UiButton(String label, ClickAction clickAction) {
         this.label = new UiText(label);
-        this.clickEvent = clickEvent;
+        this.clickAction = clickAction;
 
         container = new VerticalContainer(new Size(0, 0));
         container.addUiComponent(this.label);
@@ -44,8 +44,8 @@ public class UiButton extends UiClickable {
     }
 
     @Override
-    protected void onClick() {
-        clickEvent.run();
+    protected void onClick(State state) {
+        clickAction.execute(state);
     }
 
     @Override

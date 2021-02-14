@@ -1,12 +1,12 @@
-package entity;
+package game;
 
 import controller.GameController;
 import core.Size;
 import display.Display;
 import game.settings.GameSettings;
 import input.Input;
-import state.GameState;
 import state.State;
+import state.menu.MenuState;
 
 public class Game {
 
@@ -14,14 +14,14 @@ public class Game {
 
     private final Display display;
     private final Input input;
-    private final State state;
+    private State state;
     private final GameSettings settings;
     private final GameController gameController;
 
     public Game(int width, int height) {
         this.input = new Input();
         this.display = new Display(width, height, input);
-        this.state = new GameState(new Size(width, height), input);
+        this.state = new MenuState(new Size(width, height), input);
         this.settings = new GameSettings(true);
         this.gameController = new GameController(input);
     }
@@ -31,11 +31,15 @@ public class Game {
     }
 
     public void update() {
-        state.update();
+        state.update(this);
         gameController.update(this);
     }
 
     public GameSettings getSettings() {
         return settings;
+    }
+
+    public void enterState(State nextState) {
+        state = nextState;
     }
 }

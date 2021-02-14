@@ -3,7 +3,7 @@ package entity.humanoid.action;
 import core.CollisionBox;
 import core.Position;
 import core.Size;
-import entity.Game;
+import game.Game;
 import entity.effect.Sick;
 import entity.humanoid.Humanoid;
 import game.GameLoop;

@@ -4,6 +4,7 @@ import controller.EntityController;
 import entity.effect.Isolated;
 import entity.humanoid.action.BlowBubble;
 import entity.humanoid.Humanoid;
+import game.Game;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
 import state.State;

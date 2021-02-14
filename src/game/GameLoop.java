@@ -1,7 +1,5 @@
 package game;
 
-import entity.Game;
-
 public class GameLoop implements Runnable {
 
     public static int UPDATES_PER_SECONDS = 60;

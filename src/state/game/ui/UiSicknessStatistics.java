@@ -1,10 +1,7 @@
-package game.ui;
+package state.game.ui;
 
 import core.Size;
-import entity.MovingEntity;
-import entity.effect.Sick;
-import entity.humanoid.Humanoid;
-import state.GameState;
+import state.game.GameState;
 import state.State;
 import ui.*;
 

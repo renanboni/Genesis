@@ -1,7 +1,7 @@
 package display;
 
 import core.Position;
-import entity.Game;
+import game.Game;
 import map.GameMap;
 import state.State;
 

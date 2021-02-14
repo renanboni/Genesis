@@ -2,7 +2,7 @@ package display;
 
 import core.Position;
 import core.Size;
-import entity.Game;
+import game.Game;
 import entity.GameObject;
 import state.State;
 
@@ -23,6 +23,7 @@ public class Camera {
     public Camera(Size windowSize) {
         this.windowSize = windowSize;
         this.position = new Position(0, 0);
+        this.objectWithFocus = Optional.empty();
         calculateViewBounds();
     }
 

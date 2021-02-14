@@ -3,7 +3,7 @@ package map;
 import core.Position;
 import core.Size;
 import display.Camera;
-import entity.Game;
+import game.Game;
 import gfx.SpriteLibrary;
 
 import java.util.Arrays;

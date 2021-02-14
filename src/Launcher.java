@@ -1,4 +1,4 @@
-import entity.Game;
+import game.Game;
 import game.GameLoop;
 
 public class Launcher {

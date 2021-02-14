@@ -1,7 +1,7 @@
 package gfx;
 
 import core.Direction;
-import entity.Game;
+import game.Game;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

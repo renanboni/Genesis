@@ -1,4 +1,4 @@
-package game.ui;
+package state.game.ui;
 
 import core.Size;
 import state.State;

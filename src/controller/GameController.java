@@ -1,6 +1,6 @@
 package controller;
 
-import entity.Game;
+import game.Game;
 import input.Input;
 
 import java.awt.event.KeyEvent;
