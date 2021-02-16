@@ -7,26 +7,34 @@ import entity.GameObject;
 import entity.MovingEntity;
 import entity.humanoid.action.Action;
 import entity.effect.Effect;
+import gfx.AnimationManager;
 import gfx.SpriteLibrary;
 import state.State;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class Humanoid extends MovingEntity {
 
     protected List<Effect> effects;
     protected Optional<Action> action;
+    private static final List<String> availableCharacters = new ArrayList<>(List.of("dave", "matt", "melissa", "roger"));
 
     public Humanoid(EntityController controller, SpriteLibrary spriteLibrary) {
         super(controller, spriteLibrary);
 
         effects = new ArrayList<>();
         action = Optional.empty();
+
+        this.animationManager = new AnimationManager(spriteLibrary.getSpriteSet(getRandomCharacter()));
+
         collisionBoxSize = new Size(16, 28);
         renderOffset = new Position(size.getWidth() / 2, size.getHeight() - 12);
         collisionBoxOffset = new Position(collisionBoxSize.getWidth() / 2, collisionBoxSize.getHeight());
+    }
+
+    private String getRandomCharacter() {
+        Collections.shuffle(availableCharacters);
+        return availableCharacters.get(0);
     }
 
     @Override

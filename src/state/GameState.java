@@ -34,7 +34,7 @@ public class GameState extends State {
 
     public GameState(Size windowSize, Input input) {
         super(windowSize, input);
-        this.gameMap = new GameMap(new Size(20, 20), spriteLibrary);
+        this.gameMap = new GameMap(new Size(15, 10), spriteLibrary);
 
         this.isPlaying = true;
 
@@ -82,7 +82,7 @@ public class GameState extends State {
     }
 
     private void initializeConditions() {
-        victoryConditions = List.of(() -> getNumberOfSick() > 0);
+        victoryConditions = List.of(() -> getNumberOfSick() > 15);
         defeatConditions = List.of(() -> (float) getNumberOfSick() / getNumberOfNpcs() > 0.25);
     }
 
