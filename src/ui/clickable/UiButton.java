@@ -10,10 +10,10 @@ import java.awt.*;
 
 public class UiButton extends UiClickable {
 
-    private UIContainer container;
-    private UiText label;
+    private final UIContainer container;
+    private final UiText label;
 
-    private ClickAction clickAction;
+    private final ClickAction clickAction;
 
     public UiButton(String label, ClickAction clickAction) {
         this.label = new UiText(label);

@@ -21,8 +21,8 @@ public class Game {
     public Game(int width, int height) {
         this.input = new Input();
         this.display = new Display(width, height, input);
-        this.state = new MenuState(new Size(width, height), input);
         this.settings = new GameSettings(true);
+        this.state = new MenuState(new Size(width, height), input, settings);
         this.gameController = new GameController(input);
     }
 

@@ -13,13 +13,14 @@ public abstract class UiComponent {
     protected Size size;
     protected Spacing margin;
     protected Spacing padding;
+    protected UIContainer parent;
 
     public UiComponent() {
         relativePosition = new Position(0, 0);
         absolutePosition = new Position(0, 0);
         size = new Size(1, 1);
         margin = new Spacing(0);
-        padding = new Spacing(1);
+        padding = new Spacing(0);
     }
 
     public abstract Image getSprite();
@@ -64,5 +65,9 @@ public abstract class UiComponent {
 
     public void setAbsolutePosition(Position absolutePosition) {
         this.absolutePosition = absolutePosition;
+    }
+
+    public void setParent(UIContainer parent) {
+        this.parent = parent;
     }
 }

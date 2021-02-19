@@ -4,8 +4,11 @@ public class GameSettings {
 
     private boolean debugMode;
 
+    private final RenderSettings renderSettings;
+
     public GameSettings(boolean debugMode) {
         this.debugMode = debugMode;
+        this.renderSettings = new RenderSettings();
     }
 
     public boolean isDebugMode() {
@@ -14,5 +17,9 @@ public class GameSettings {
 
     public void toggleDebugMode() {
         debugMode = !debugMode;
+    }
+
+    public RenderSettings getRenderSettings() {
+        return renderSettings;
     }
 }

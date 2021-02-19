@@ -6,6 +6,7 @@ import display.Camera;
 import entity.GameObject;
 import game.Game;
 import game.Time;
+import game.settings.GameSettings;
 import gfx.SpriteLibrary;
 import input.Input;
 import map.GameMap;
@@ -21,16 +22,16 @@ public abstract class State {
     protected final List<GameObject> gameObjects;
     protected final List<UIContainer> uiContainers;
     protected final SpriteLibrary spriteLibrary;
+    private final GameSettings settings;
     protected GameMap gameMap;
     protected Input input;
     protected Camera camera;
     protected Time time;
-
     protected Size windowsSize;
-
     private State nextState;
 
-    public State(Size windowSize, Input input) {
+    public State(Size windowSize, Input input, GameSettings settings) {
+        this.settings = settings;
         this.windowsSize = windowSize;
         this.input = input;
         this.gameObjects = new ArrayList<>();
@@ -124,5 +125,9 @@ public abstract class State {
 
     public void setNextState(State nextState) {
         this.nextState = nextState;
+    }
+
+    public GameSettings getSettings() {
+        return settings;
     }
 }

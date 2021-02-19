@@ -1,6 +1,7 @@
 package state.menu.ui;
 
 import core.Size;
+import state.editor.EditorState;
 import state.game.GameState;
 import state.menu.MenuState;
 import ui.Alignment;
@@ -16,8 +17,9 @@ public class UiMainMenu extends VerticalContainer {
         alignment = new Alignment(Alignment.Position.CENTER, Alignment.Position.CENTER);
 
         addUiComponent(new UiText("Genesis"));
-        addUiComponent(new UiButton("PLAY", (state) -> state.setNextState(new GameState(windowSize, state.getInput()))));
-        addUiComponent(new UiButton("OPTIONS", (state) -> ((MenuState)state).enterMenu(new UiOptionMenu(windowSize))));
+        addUiComponent(new UiButton("PLAY", (state) -> state.setNextState(new GameState(windowSize, state.getInput(), state.getSettings()))));
+        addUiComponent(new UiButton("OPTIONS", (state) -> ((MenuState) state).enterMenu(new UiOptionMenu(windowSize))));
+        addUiComponent(new UiButton("EDITOR", (state) -> state.setNextState(new EditorState(windowSize, state.getInput(), state.getSettings()))));
         addUiComponent(new UiButton("EXIT", (state) -> System.exit(0)));
     }
 }

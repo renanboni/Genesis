@@ -11,6 +11,7 @@ import entity.effect.Isolated;
 import entity.effect.Sick;
 import entity.humanoid.Humanoid;
 import game.Game;
+import game.settings.GameSettings;
 import state.game.ui.UiGameTime;
 import state.game.ui.UiSicknessStatistics;
 import input.Input;
@@ -32,8 +33,8 @@ public class GameState extends State {
 
     private boolean isPlaying;
 
-    public GameState(Size windowSize, Input input) {
-        super(windowSize, input);
+    public GameState(Size windowSize, Input input, GameSettings settings) {
+        super(windowSize, input, settings);
         this.gameMap = new GameMap(new Size(15, 10), spriteLibrary);
 
         this.isPlaying = true;
@@ -64,7 +65,7 @@ public class GameState extends State {
         VerticalContainer container = new VerticalContainer(camera.getSize());
         container.setAlignment(new Alignment(Alignment.Position.CENTER, Alignment.Position.CENTER));
         container.setBackgroundColor(Color.DARK_GRAY);
-        container.addUiComponent(new UiButton("Menu", (state) -> state.setNextState(new MenuState(windowsSize, input))));
+        container.addUiComponent(new UiButton("Menu", (state) -> state.setNextState(new MenuState(windowsSize, input, state.getSettings()))));
         container.addUiComponent(new UiButton("Options", (state) -> System.out.println("Button 1 pressed")));
         container.addUiComponent(new UiButton("Exit", (state) -> System.out.println("Button 1 pressed")));
 
