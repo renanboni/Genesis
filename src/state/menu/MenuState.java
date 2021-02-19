@@ -12,6 +12,7 @@ public class MenuState extends State {
     public MenuState(Size windowSize, Input input, GameSettings settings) {
         super(windowSize, input, settings);
         this.gameMap = new GameMap(new Size(20, 20), spriteLibrary);
+        settings.getRenderSettings().getShouldRenderGrid().setValue(false);
 
         uiContainers.add(new UiMainMenu(windowSize));
     }

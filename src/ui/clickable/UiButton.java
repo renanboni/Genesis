@@ -20,6 +20,7 @@ public class UiButton extends UiClickable {
         this.clickAction = clickAction;
 
         container = new VerticalContainer(new Size(0, 0));
+        container.setCenterChildren(true);
         container.addUiComponent(this.label);
         container.setFixedSize(new Size(150, 40));
     }

@@ -36,6 +36,7 @@ public class GameState extends State {
     public GameState(Size windowSize, Input input, GameSettings settings) {
         super(windowSize, input, settings);
         this.gameMap = new GameMap(new Size(15, 10), spriteLibrary);
+        settings.getRenderSettings().getShouldRenderGrid().setValue(false);
 
         this.isPlaying = true;
 

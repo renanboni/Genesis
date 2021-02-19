@@ -14,6 +14,7 @@ public class EditorState extends State {
         super(windowSize, input, settings);
 
         this.gameMap = new GameMap(new Size(20, 20), spriteLibrary);
+        settings.getRenderSettings().getShouldRenderGrid().setValue(true);
 
         uiContainers.add(new UiButtonMenu(windowSize));
         uiContainers.add(new UiRenderSettings(windowSize, settings.getRenderSettings()));
