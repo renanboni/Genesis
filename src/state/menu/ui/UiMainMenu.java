@@ -9,12 +9,16 @@ import ui.UiText;
 import ui.VerticalContainer;
 import ui.clickable.UiButton;
 
+import java.awt.*;
+
 public class UiMainMenu extends VerticalContainer {
 
     public UiMainMenu(Size windowSize) {
         super(windowSize);
 
         alignment = new Alignment(Alignment.Position.CENTER, Alignment.Position.CENTER);
+
+        setBackgroundColor(Color.DARK_GRAY);
 
         addUiComponent(new UiText("Genesis"));
         addUiComponent(new UiButton("PLAY", (state) -> state.setNextState(new GameState(windowSize, state.getInput(), state.getSettings()))));
