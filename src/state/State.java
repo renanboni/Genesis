@@ -9,6 +9,7 @@ import game.Time;
 import game.settings.GameSettings;
 import gfx.SpriteLibrary;
 import input.Input;
+import input.mouse.MouseHandler;
 import map.GameMap;
 import ui.UIContainer;
 
@@ -29,6 +30,7 @@ public abstract class State {
     protected Time time;
     protected Size windowsSize;
     private State nextState;
+    private MouseHandler mouseHandler;
 
     public State(Size windowSize, Input input, GameSettings settings) {
         this.settings = settings;
@@ -39,6 +41,7 @@ public abstract class State {
         this.spriteLibrary = new SpriteLibrary();
         this.camera = new Camera(windowSize);
         this.time = new Time();
+        this.mouseHandler = new MouseHandler();
     }
 
     public void update(Game game) {
@@ -47,19 +50,11 @@ public abstract class State {
         updateGameObjects();
         List.copyOf(uiContainers).forEach(uiContainer -> uiContainer.update(this));
         camera.update(this);
-        handleMouseInput();
+        mouseHandler.update(this);
 
         if (nextState != null) {
             game.enterState(nextState);
         }
-    }
-
-    private void handleMouseInput() {
-        if (input.isMouseClicked()) {
-            System.out.printf("MOUSE CLICKED AT POSITION: x:%d y:%d\n", input.getMousePosition().intX(), input.getMousePosition().intY());
-        }
-
-        input.clearMouseClick();
     }
 
     private void updateGameObjects() {
@@ -129,5 +124,9 @@ public abstract class State {
 
     public GameSettings getSettings() {
         return settings;
+    }
+
+    public MouseHandler getMouseHandler() {
+        return mouseHandler;
     }
 }

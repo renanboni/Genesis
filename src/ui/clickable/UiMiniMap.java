@@ -17,6 +17,8 @@ public class UiMiniMap extends UiClickable {
     private Rectangle cameraViewBounds;
     private BufferedImage mapImage;
     private Color color;
+    private Position pixelOffset;
+    private int pixelsPerGrid;
 
     public UiMiniMap(GameMap map) {
         size = new Size(128, 128);
@@ -33,8 +35,8 @@ public class UiMiniMap extends UiClickable {
 
         Camera camera = state.getCamera();
         cameraViewBounds = new Rectangle(
-                (int) (camera.getPosition().getX() * ratio),
-                (int) (camera.getPosition().getY() * ratio),
+                (int) (camera.getPosition().getX() * ratio + pixelOffset.intX()),
+                (int) (camera.getPosition().getY() * ratio + pixelOffset.intY()),
                 (int) (getSize().getWidth() * ratio),
                 (int) (getSize().getHeight() * ratio)
         );
@@ -50,29 +52,34 @@ public class UiMiniMap extends UiClickable {
         mapImage = (BufferedImage) ImageUtils.createCompatibleImage(size, ImageUtils.ALPHA_OPAQUE);
         Graphics2D graphics = mapImage.createGraphics();
 
-        int pixelsPerGrid = (int) Math.round(Game.SPRITE_SIZE * ratio);
-
         for (int x = 0; x < gameMap.getTiles().length; x++) {
             for (int y = 0; y < gameMap.getTiles()[0].length; y++) {
                 graphics.drawImage(
                         gameMap.getTiles()[x][y].getSprite().getScaledInstance(pixelsPerGrid, pixelsPerGrid, 0),
-                        x * pixelsPerGrid + (size.getWidth() - gameMap.getTiles().length * pixelsPerGrid) / 2,
-                        y * pixelsPerGrid + (size.getHeight() - gameMap.getTiles()[0].length * pixelsPerGrid) / 2,
+                        x * pixelsPerGrid + pixelOffset.intX(),
+                        y * pixelsPerGrid + pixelOffset.intY(),
                         null
                 );
             }
         }
     }
 
-    private void calculateRatio(GameMap map) {
+    private void calculateRatio(GameMap gameMap) {
         ratio = Math.min(
-                getSize().getWidth() / map.getWidth(),
-                getSize().getHeight() / map.getHeight()
+                getSize().getWidth() / gameMap.getWidth(),
+                getSize().getHeight() / gameMap.getHeight()
+        );
+
+        pixelsPerGrid = (int) Math.round(Game.SPRITE_SIZE * ratio);
+
+        pixelOffset = new Position(
+                (size.getWidth() - gameMap.getTiles().length * pixelsPerGrid) / 2,
+                (size.getHeight() - gameMap.getTiles()[0].length * pixelsPerGrid) / 2
         );
     }
 
     @Override
-    protected void onClick(State state) {
+    public void onClick(State state) {
 
     }
 
@@ -82,9 +89,10 @@ public class UiMiniMap extends UiClickable {
     }
 
     @Override
-    protected void onDrag(State state) {
+    public void onDrag(State state) {
         Position mousePosition = Position.copyOf(state.getInput().getMousePosition());
         mousePosition.subtract(absolutePosition);
+        mousePosition.subtract(pixelOffset);
 
         state.getCamera().setPosition(new Position(
                 mousePosition.getX() / ratio - cameraViewBounds.getSize().getWidth() / ratio / 2,
