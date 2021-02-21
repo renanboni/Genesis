@@ -1,5 +1,6 @@
 package ui.clickable;
 
+import core.Position;
 import core.Size;
 import display.Camera;
 import game.Game;
@@ -73,6 +74,22 @@ public class UiMiniMap extends UiClickable {
     @Override
     protected void onClick(State state) {
 
+    }
+
+    @Override
+    protected void onFocus(State state) {
+
+    }
+
+    @Override
+    protected void onDrag(State state) {
+        Position mousePosition = Position.copyOf(state.getInput().getMousePosition());
+        mousePosition.subtract(absolutePosition);
+
+        state.getCamera().setPosition(new Position(
+                mousePosition.getX() / ratio - cameraViewBounds.getSize().getWidth() / ratio / 2,
+                mousePosition.getY() / ratio - cameraViewBounds.getSize().getHeight() / ratio / 2)
+        );
     }
 
     @Override

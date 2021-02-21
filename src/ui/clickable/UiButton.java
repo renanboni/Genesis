@@ -53,6 +53,16 @@ public class UiButton extends UiClickable {
     }
 
     @Override
+    protected void onFocus(State state) {
+
+    }
+
+    @Override
+    protected void onDrag(State state) {
+
+    }
+
+    @Override
     public Image getSprite() {
         return container.getSprite();
     }

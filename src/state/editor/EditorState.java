@@ -17,6 +17,6 @@ public class EditorState extends State {
         settings.getRenderSettings().getShouldRenderGrid().setValue(true);
 
         uiContainers.add(new UiButtonMenu(windowSize));
-        uiContainers.add(new UiRenderSettings(windowSize, settings.getRenderSettings()));
+        uiContainers.add(new UiRenderSettings(windowSize, settings.getRenderSettings(), gameMap));
     }
 }

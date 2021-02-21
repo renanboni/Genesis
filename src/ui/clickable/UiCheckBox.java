@@ -64,6 +64,16 @@ public class UiCheckBox extends UiComponent {
         }
 
         @Override
+        protected void onFocus(State state) {
+
+        }
+
+        @Override
+        protected void onDrag(State state) {
+
+        }
+
+        @Override
         public Image getSprite() {
             BufferedImage sprite = (BufferedImage) ImageUtils.createCompatibleImage(size, ImageUtils.ALPHA_BIT_MASKED);
             Graphics2D graphics = (Graphics2D) sprite.getGraphics();

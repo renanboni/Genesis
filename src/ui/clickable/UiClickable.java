@@ -17,12 +17,18 @@ public abstract class UiClickable extends UiComponent {
         hasFocus = getBounds().contains(mousePosition.intX(), mousePosition.intY());
         isPressed = hasFocus && state.getInput().isMousePressed();
 
-        if (hasFocus && state.getInput().isMouseClicked()) {
+        if(hasFocus && state.getInput().isMouseClicked()) {
             onClick(state);
+        }
+
+        if(hasFocus && state.getInput().isMousePressed()) {
+            onDrag(state);
         }
     }
 
     protected abstract void onClick(State state);
+    protected abstract void onFocus(State state);
+    protected abstract void onDrag(State state);
 
     private Rectangle getBounds() {
         return new Rectangle(
