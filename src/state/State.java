@@ -30,7 +30,7 @@ public abstract class State {
     protected Time time;
     protected Size windowsSize;
     private State nextState;
-    private MouseHandler mouseHandler;
+    private final MouseHandler mouseHandler;
 
     public State(Size windowSize, Input input, GameSettings settings) {
         this.settings = settings;
