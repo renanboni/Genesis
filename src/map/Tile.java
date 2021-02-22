@@ -16,6 +16,14 @@ public class Tile {
         this.sprite = spriteLibrary.getImage(tileName);
     }
 
+    private Tile(Image sprite) {
+        this.sprite = sprite;
+    }
+
+    public static Tile copyOf(Tile tile) {
+        return new Tile(tile.getSprite());
+    }
+
     public Image getSprite() {
         return sprite;
     }

@@ -8,8 +8,8 @@ public class Time {
         this.updatesSinceStart = 0;
     }
 
-    public int getUpdatesFromSecond(int seconds) {
-        return seconds * GameLoop.UPDATES_PER_SECONDS;
+    public int getUpdatesFromSecond(double seconds) {
+        return (int) Math.round(seconds * GameLoop.UPDATES_PER_SECONDS);
     }
 
     public void update() {
@@ -35,5 +35,9 @@ public class Time {
 
         builder.append(seconds);
         return builder.toString();
+    }
+
+    public boolean secondsDividableBy(double seconds) {
+        return updatesSinceStart % getUpdatesFromSecond(seconds) == 0;
     }
 }

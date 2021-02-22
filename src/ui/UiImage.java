@@ -16,7 +16,7 @@ public class UiImage extends UiComponent {
 
     @Override
     public Image getSprite() {
-        return null;
+        return image;
     }
 
     @Override

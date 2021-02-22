@@ -33,6 +33,10 @@ public class UiMiniMap extends UiClickable {
     public void update(State state) {
         super.update(state);
 
+        if (state.getTime().secondsDividableBy(0.25)) {
+            generateMap(state.getGameMap());
+        }
+
         Camera camera = state.getCamera();
         cameraViewBounds = new Rectangle(
                 (int) (camera.getPosition().getX() * ratio + pixelOffset.intX()),
