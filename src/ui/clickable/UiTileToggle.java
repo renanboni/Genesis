@@ -17,7 +17,7 @@ public class UiTileToggle extends UiClickable {
     private boolean isActive;
 
     public UiTileToggle(Tile tile) {
-        image = new UiImage(tile.getSprite());
+        image = new UiImage(tile.getSprite().getScaledInstance(32, 32, Image.SCALE_AREA_AVERAGING));
         tilePlacer = new TilePlacer(tile);
         size = image.getSize();
         generateActiveSprite();
