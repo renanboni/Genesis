@@ -12,6 +12,7 @@ import entity.effect.Sick;
 import entity.humanoid.Humanoid;
 import game.Game;
 import game.settings.GameSettings;
+import map.MapIO;
 import state.game.ui.UiGameTime;
 import state.game.ui.UiSicknessStatistics;
 import input.Input;
@@ -35,7 +36,7 @@ public class GameState extends State {
 
     public GameState(Size windowSize, Input input, GameSettings settings) {
         super(windowSize, input, settings);
-        this.gameMap = new GameMap(new Size(15, 10), spriteLibrary);
+        this.gameMap = MapIO.load(getSpriteLibrary());
         settings.getRenderSettings().getShouldRenderGrid().setValue(false);
 
         this.isPlaying = true;
