@@ -1,0 +1,29 @@
+package state.menu.ui;
+
+import core.Size;
+import state.GameState;
+import state.editor.EditorState;
+import state.menu.MenuState;
+import ui.Alignment;
+import ui.UiText;
+import ui.VerticalContainer;
+import ui.clickable.UiButton;
+
+import java.awt.*;
+
+public class UiMainMenu extends VerticalContainer {
+
+    public UiMainMenu(Size windowSize) {
+        super(windowSize);
+
+        alignment = new Alignment(Alignment.Position.CENTER, Alignment.Position.CENTER);
+
+        setBackgroundColor(Color.DARK_GRAY);
+
+        addUiComponent(new UiText("Genesis"));
+        addUiComponent(new UiButton("PLAY", (state) -> state.setNextState(new GameState(windowSize, state.getInput(), state.getSettings()))));
+        addUiComponent(new UiButton("OPTIONS", (state) -> ((MenuState) state).enterMenu(new UiOptionMenu(windowSize))));
+        addUiComponent(new UiButton("EDITOR", (state) -> state.setNextState(new EditorState(windowSize, state.getInput(), state.getSettings()))));
+        addUiComponent(new UiButton("EXIT", (state) -> System.exit(0)));
+    }
+}
