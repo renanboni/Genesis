@@ -2,10 +2,12 @@ gfx/SpriteLibrary.java
  gfx.SpriteLibrary
 game/Time.java
  game.Time
-display/Renderer.java
- display.Renderer
+game/Game.java
+ game.Game
 gfx/ImageUtils.java
  gfx.ImageUtils
+network/Connection.java
+ network.Connection
 controller/GameController.java
  controller.GameController
 entity/action/Cough.java
@@ -25,6 +27,8 @@ ui/Alignment.java
  ui.Alignment$Position
 entity/effect/Caffeinated.java
  entity.effect.Caffeinated
+main/Client.java
+ main.Client
 ui/clickable/UiCheckBox.java
  ui.clickable.UiCheckBox
  ui.clickable.UiCheckBox$CheckBox
@@ -38,8 +42,8 @@ ai/AiTransition.java
  ai.AiTransition
 entity/humanoid/action/Action.java
  entity.humanoid.action.Action
-Launcher.java
- main.java.Launcher
+state/game/ui/UiSicknessStatistics.java
+ state.game.ui.UiSicknessStatistics
 display/DebugRenderer.java
  display.DebugRenderer
 state/editor/ui/UiTileMenu.java
@@ -74,18 +78,16 @@ ui/clickable/ClickAction.java
  ui.clickable.ClickAction
 entity/humanoid/Humanoid.java
  entity.humanoid.Humanoid
-gfx/SpriteSet.java
- gfx.SpriteSet
+state/menu/MenuState.java
+ state.menu.MenuState
 map/MapIO.java
  map.MapIO
 core/Condition.java
  core.Condition
 ui/clickable/UiButton.java
  ui.clickable.UiButton
-ui/UiComponent.java
- ui.UiComponent
-ui/UiImage.java
- ui.UiImage
+state/GameState.java
+ state.GameState
 core/Vector2D.java
  core.Vector2D
 state/State.java
@@ -96,8 +98,8 @@ display/Camera.java
  display.Camera
 entity/NPC.java
  entity.NPC
-ai/state/Stand.java
- ai.state.Stand
+state/menu/ui/UiMainMenu.java
+ state.menu.ui.UiMainMenu
 ui/VerticalContainer.java
  ui.VerticalContainer
 ui/UIContainer.java
@@ -112,14 +114,14 @@ entity/action/Action.java
  entity.action.Action
 input/mouse/MouseConsumer.java
  input.mouse.MouseConsumer
-core/Position.java
- core.Position
+state/editor/ui/UiButtonMenu.java
+ state.editor.ui.UiButtonMenu
 input/mouse/action/TilePlacer.java
  input.mouse.action.TilePlacer
 entity/Player.java
  entity.Player
-input/mouse/action/MouseAction.java
- input.mouse.action.MouseAction
+state/menu/ui/UiOptionMenu.java
+ state.menu.ui.UiOptionMenu
 gfx/AnimationManager.java
  gfx.AnimationManager
 ui/UiText.java
@@ -150,17 +152,17 @@ game/settings/GameSettings.java
  game.settings.GameSettings
 entity/effect/Effect.java
  entity.effect.Effect
-state/menu/MenuState.java
- state.menu.MenuState
-game/Game.java
- game.Game
-state/GameState.java
- state.GameState
-state/editor/ui/UiButtonMenu.java
- state.editor.ui.UiButtonMenu
-state/menu/ui/UiMainMenu.java
- state.menu.ui.UiMainMenu
-state/game/ui/UiSicknessStatistics.java
- state.game.ui.UiSicknessStatistics
-state/menu/ui/UiOptionMenu.java
- state.menu.ui.UiOptionMenu
+ui/UiComponent.java
+ ui.UiComponent
+input/mouse/action/MouseAction.java
+ input.mouse.action.MouseAction
+ai/state/Stand.java
+ ai.state.Stand
+core/Position.java
+ core.Position
+ui/UiImage.java
+ ui.UiImage
+display/Renderer.java
+ display.Renderer
+gfx/SpriteSet.java
+ gfx.SpriteSet
