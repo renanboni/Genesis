@@ -9,9 +9,11 @@ import game.Time;
 import game.settings.GameSettings;
 import gfx.SpriteLibrary;
 import input.Input;
+import input.KeyInputConsumer;
 import input.mouse.MouseHandler;
 import map.GameMap;
-import map.MapIO;
+import io.MapIO;
+import ui.UICanvas;
 import ui.UIContainer;
 
 import java.util.ArrayList;
@@ -31,12 +33,15 @@ public abstract class State {
     protected Time time;
     protected Size windowsSize;
     private State nextState;
+    protected UICanvas uiCanvas;
     private final MouseHandler mouseHandler;
+    private KeyInputConsumer keyInputConsumer;
 
     public State(Size windowSize, Input input, GameSettings settings) {
         this.settings = settings;
         this.windowsSize = windowSize;
         this.input = input;
+        this.uiCanvas = new UICanvas(windowSize);
         this.gameObjects = new ArrayList<>();
         this.uiContainers = new ArrayList<>();
         this.spriteLibrary = new SpriteLibrary();
@@ -45,16 +50,33 @@ public abstract class State {
         this.mouseHandler = new MouseHandler();
     }
 
+    protected abstract void handleInput();
+
     public void update(Game game) {
         time.update();
         sortObjectsByPosition();
         updateGameObjects();
         List.copyOf(uiContainers).forEach(uiContainer -> uiContainer.update(this));
         camera.update(this);
+        uiCanvas.update(this);
         mouseHandler.update(this);
+        handleKeyInput();
 
         if (nextState != null) {
             game.enterState(nextState);
+        }
+    }
+
+    private void handleKeyInput() {
+        if (keyInputConsumer != null) {
+            List<Integer> typedKeyBuffer = input.getTypedKeyBuffer();
+            for (int i = 0, typedKeyBufferSize = typedKeyBuffer.size(); i < typedKeyBufferSize; i++) {
+                int keyCode = typedKeyBuffer.get(i);
+                keyInputConsumer.onKeyPressed(keyCode);
+                input.clear();
+            }
+        } else {
+            handleInput();
         }
     }
 
@@ -133,5 +155,21 @@ public abstract class State {
 
     public void loadGameMap() {
         gameMap = MapIO.load(spriteLibrary);
+    }
+
+    public KeyInputConsumer getKeyInputConsumer() {
+        return keyInputConsumer;
+    }
+
+    public void setKeyInputConsumer(KeyInputConsumer keyInputConsumer) {
+        this.keyInputConsumer = keyInputConsumer;
+    }
+
+    public UICanvas getUiCanvas() {
+        return uiCanvas;
+    }
+
+    public Size getWindowSize() {
+        return windowsSize;
     }
 }

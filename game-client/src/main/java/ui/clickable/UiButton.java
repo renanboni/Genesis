@@ -22,7 +22,7 @@ public class UiButton extends UiClickable {
 
         setMargin(new Spacing(5, 0, 0, 0));
 
-        container = new VerticalContainer(new Size(0, 0));
+        container = new VerticalContainer();
         container.setCenterChildren(true);
         container.addUiComponent(this.label);
         container.setFixedSize(new Size(150, 40));

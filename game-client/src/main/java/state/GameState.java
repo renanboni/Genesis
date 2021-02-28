@@ -14,7 +14,6 @@ import game.Game;
 import game.settings.GameSettings;
 import input.Input;
 import map.GameMap;
-import map.MapIO;
 import state.game.ui.UiGameTime;
 import state.game.ui.UiSicknessStatistics;
 import state.menu.MenuState;
@@ -39,9 +38,15 @@ public class GameState extends State {
         settings.getRenderSettings().getShouldRenderGrid().setValue(false);
         this.isPlaying = true;
 
+        win();
         initializeCharacters();
-        initializeUi(windowSize);
+        initializeUi();
         initializeConditions();
+    }
+
+    @Override
+    protected void handleInput() {
+
     }
 
     @Override
@@ -62,7 +67,7 @@ public class GameState extends State {
     private void win() {
         isPlaying = false;
 
-        VerticalContainer container = new VerticalContainer(camera.getSize());
+        VerticalContainer container = new VerticalContainer();
         container.setAlignment(new Alignment(Alignment.Position.CENTER, Alignment.Position.CENTER));
         container.setBackgroundColor(Color.DARK_GRAY);
         container.addUiComponent(new UiButton("Menu", (state) -> state.setNextState(new MenuState(windowsSize, input, state.getSettings()))));
@@ -75,7 +80,7 @@ public class GameState extends State {
     private void lose() {
         isPlaying = false;
 
-        VerticalContainer container = new VerticalContainer(camera.getSize());
+        VerticalContainer container = new VerticalContainer();
         container.setAlignment(new Alignment(Alignment.Position.CENTER, Alignment.Position.CENTER));
         container.addUiComponent(new UiText("DEFEAT!"));
 
@@ -87,9 +92,9 @@ public class GameState extends State {
         defeatConditions = List.of(() -> (float) getNumberOfSick() / getNumberOfNpcs() > 0.25);
     }
 
-    private void initializeUi(Size windowSize) {
-        uiContainers.add(new UiGameTime(windowSize));
-        uiContainers.add(new UiSicknessStatistics(windowSize));
+    private void initializeUi() {
+        uiCanvas.addUIComponent(new UiGameTime());
+        uiCanvas.addUIComponent(new UiSicknessStatistics());
     }
 
     private void initializeCharacters() {

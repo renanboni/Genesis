@@ -5,24 +5,20 @@ import core.Size;
 
 public class VerticalContainer extends UIContainer {
 
-    public VerticalContainer(Size windowSize) {
-        super(windowSize);
-    }
-
     @Override
     protected Size calculateContentSize() {
-        int combinedChildrenHeight = 0;
-        int tallestChildWidth = 0;
+        int combinedChildHeight = 0;
+        int widestChildWidth = 0;
 
-        for (UiComponent component : children) {
-            combinedChildrenHeight += component.getSize().getHeight() + component.getMargin().getVertical();
+        for(UiComponent uiComponent : children) {
+            combinedChildHeight += uiComponent.getSize().getHeight() + uiComponent.getMargin().getVertical();
 
-            if (component.getSize().getWidth() > tallestChildWidth) {
-                tallestChildWidth = component.getSize().getWidth();
+            if(uiComponent.getSize().getWidth() > widestChildWidth) {
+                widestChildWidth = uiComponent.getSize().getWidth();
             }
         }
 
-        return new Size(tallestChildWidth, combinedChildrenHeight);
+        return new Size(widestChildWidth, combinedChildHeight);
     }
 
     @Override

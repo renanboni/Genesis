@@ -3,6 +3,8 @@ package input;
 import core.Position;
 
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Input implements KeyListener, MouseListener, MouseMotionListener {
 
@@ -13,14 +15,22 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
     private boolean mouseClicked;
     private boolean mousePressed;
 
+    private final List<Integer> typedKeyBuffer;
+
     public Input() {
         currentlyPressed = new boolean[255];
         pressed = new boolean[255];
         mousePosition = new Position(0, 0);
+        this.typedKeyBuffer = new ArrayList<>();
     }
 
-    public void clearMouseClick() {
+    public void clearInputEvents() {
         mouseClicked = false;
+
+    }
+
+    public void clear() {
+        typedKeyBuffer.clear();
     }
 
     public boolean isCurrentlyPressed(int keyCode) {
@@ -47,6 +57,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
     public void keyReleased(KeyEvent e) {
         currentlyPressed[e.getKeyCode()] = false;
         pressed[e.getKeyCode()] = false;
+        typedKeyBuffer.add(e.getKeyCode());
     }
 
     @Override
@@ -89,5 +100,9 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
 
     public boolean isMousePressed() {
         return mousePressed;
+    }
+
+    public List<Integer> getTypedKeyBuffer() {
+        return typedKeyBuffer;
     }
 }

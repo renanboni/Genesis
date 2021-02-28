@@ -33,7 +33,7 @@ public class MouseHandler {
             activeConsumer = null;
         }
 
-        input.clearMouseClick();
+        input.clearInputEvents();
     }
 
     private void handleActiveConsumer(State state, Input input) {

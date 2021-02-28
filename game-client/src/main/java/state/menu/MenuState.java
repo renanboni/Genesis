@@ -4,7 +4,6 @@ import core.Size;
 import game.settings.GameSettings;
 import input.Input;
 import map.GameMap;
-import map.MapIO;
 import state.State;
 import state.menu.ui.UiMainMenu;
 import ui.UIContainer;
@@ -14,12 +13,16 @@ public class MenuState extends State {
         super(windowSize, input, settings);
         this.gameMap = new GameMap(new Size(20, 20), spriteLibrary);
         settings.getRenderSettings().getShouldRenderGrid().setValue(false);
+        uiCanvas.addUIComponent(new UiMainMenu());
+    }
 
-        uiContainers.add(new UiMainMenu(windowSize));
+    @Override
+    protected void handleInput() {
+
     }
 
     public void enterMenu(UIContainer container) {
-        uiContainers.clear();
-        uiContainers.add(container);
+        uiCanvas.clear();
+        uiCanvas.addUIComponent(container);
     }
 }

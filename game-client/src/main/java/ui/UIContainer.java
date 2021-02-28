@@ -13,26 +13,20 @@ import java.util.List;
 public abstract class UIContainer extends UiComponent {
 
     protected Color backgroundColor;
-
     protected List<UiComponent> children = new ArrayList<>();
-
     protected Alignment alignment;
-    protected Size windowSize;
-
     protected Size fixedSize;
+    protected Image sprite;
 
     protected boolean centerChildren;
 
-    public UIContainer(Size windowSize) {
+    public UIContainer() {
         super();
         backgroundColor = new Color(0, 0, 0, 0);
-        this.windowSize = windowSize;
-        this.centerChildren = false;
+        centerChildren = false;
         alignment = new Alignment(Alignment.Position.START, Alignment.Position.START);
         padding = new Spacing(5);
         margin = new Spacing(5);
-        calculateSize();
-        calculatePosition();
     }
 
     protected abstract Size calculateContentSize();
@@ -49,48 +43,49 @@ public abstract class UIContainer extends UiComponent {
         int x = padding.getLeft();
 
         if (alignment.getHorizontal().equals(Alignment.Position.CENTER)) {
-            x = windowSize.getWidth() / 2 - size.getWidth() / 2;
+            x = parent.getSize().getWidth() / 2 - size.getWidth() / 2;
         }
 
         if (alignment.getHorizontal().equals(Alignment.Position.END)) {
-            x = windowSize.getWidth() - size.getWidth() - margin.getRight();
+            x = parent.getSize().getWidth() - size.getWidth() - margin.getRight();
         }
 
         int y = padding.getTop();
 
         if (alignment.getVertical().equals(Alignment.Position.CENTER)) {
-            y = windowSize.getHeight() / 2 - size.getHeight() / 2;
+            y = parent.getSize().getHeight() / 2 - size.getHeight() / 2;
         }
 
         if (alignment.getVertical().equals(Alignment.Position.END)) {
-            y = windowSize.getHeight() - size.getHeight() - margin.getBottom();
+            y = parent.getSize().getHeight() - size.getHeight() - margin.getBottom();
         }
 
         this.relativePosition = new Position(x, y);
-
-        if (parent == null) {
-            this.absolutePosition = new Position(x, y);
-        }
         calculateContentPosition();
     }
 
     @Override
     public Image getSprite() {
-        BufferedImage image = (BufferedImage) ImageUtils.createCompatibleImage(size, ImageUtils.ALPHA_BIT_MASKED);
-        Graphics2D graphics2D = image.createGraphics();
+        return sprite;
+    }
 
-        graphics2D.setColor(backgroundColor);
-        graphics2D.fillRect(0, 0, size.getWidth(), size.getHeight());
+    protected void generateSprite() {
+        sprite = ImageUtils.createCompatibleImage(size, ImageUtils.ALPHA_BIT_MASKED);
+        Graphics2D graphics = (Graphics2D) sprite.getGraphics();
 
-        children.forEach(uiComponent -> graphics2D.drawImage(
-                uiComponent.getSprite(),
-                uiComponent.getRelativePosition().intX(),
-                uiComponent.getRelativePosition().intY(),
-                null
-        ));
+        graphics.setColor(backgroundColor);
+        graphics.fillRect(0, 0, size.getWidth(), size.getHeight());
 
-        graphics2D.dispose();
-        return image;
+        for(UiComponent uiComponent : children) {
+            graphics.drawImage(
+                    uiComponent.getSprite(),
+                    uiComponent.getRelativePosition().intX(),
+                    uiComponent.getRelativePosition().intY(),
+                    null
+            );
+        }
+
+        graphics.dispose();
     }
 
     @Override
@@ -98,11 +93,19 @@ public abstract class UIContainer extends UiComponent {
         children.forEach(uiComponent -> uiComponent.update(state));
         calculateSize();
         calculatePosition();
+
+        if(state.getTime().secondsDividableBy(0.05)) {
+            generateSprite();
+        }
     }
 
     public void addUiComponent(UiComponent component) {
         children.add(component);
         component.setParent(this);
+    }
+
+    public void clear() {
+        children.clear();
     }
 
     public void setBackgroundColor(Color color) {
@@ -123,5 +126,22 @@ public abstract class UIContainer extends UiComponent {
 
     public void setCenterChildren(boolean centerChildren) {
         this.centerChildren = centerChildren;
+    }
+
+    public void addUIComponent(UiComponent uiComponent) {
+        children.add(uiComponent);
+        uiComponent.setParent(this);
+    }
+
+    public boolean hasComponent(UiComponent component) {
+        return children.contains(component);
+    }
+
+    public void removeComponent(UiComponent component) {
+        children.remove(component);
+    }
+
+    public List<UiComponent> getComponents() {
+        return children;
     }
 }

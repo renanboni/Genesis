@@ -2,13 +2,13 @@ package game.settings;
 
 public class RenderSettings {
 
-    private final Setting<Boolean> shouldRenderGrid;
+    private final Value<Boolean> shouldRenderGrid;
 
     public RenderSettings() {
-        shouldRenderGrid = new Setting<>(false);
+        shouldRenderGrid = new Value<>(false);
     }
 
-    public Setting<Boolean> getShouldRenderGrid() {
+    public Value<Boolean> getShouldRenderGrid() {
         return shouldRenderGrid;
     }
 }

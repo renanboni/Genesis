@@ -23,7 +23,7 @@ public class Renderer {
                 null
         ));
 
-        state.getUiContainers().forEach(uiContainer -> graphics.drawImage(
+        state.getUiCanvas().getComponents().forEach(uiContainer -> graphics.drawImage(
                 uiContainer.getSprite(),
                 uiContainer.getRelativePosition().intX(),
                 uiContainer.getRelativePosition().intY(),
@@ -60,15 +60,28 @@ public class Renderer {
                         y * Game.SPRITE_SIZE - camera.getPosition().intY(),
                         null
                 );
+            }
+        }
 
-                if (state.getSettings().getRenderSettings().getShouldRenderGrid().getValue()) {
-                    graphics.drawRect(
-                            x * Game.SPRITE_SIZE - camera.getPosition().intX(),
-                            y * Game.SPRITE_SIZE - camera.getPosition().intY(),
-                            Game.SPRITE_SIZE,
-                            Game.SPRITE_SIZE
-                    );
-                }
+        if (state.getSettings().getRenderSettings().getShouldRenderGrid().get()) {
+            graphics.setColor(Color.GRAY);
+
+            for (int x = start.intX(); x < end.intX(); x++) {
+                graphics.drawLine(
+                        x * Game.SPRITE_SIZE - camera.getPosition().intX(),
+                        start.intY() * Game.SPRITE_SIZE - camera.getPosition().intY(),
+                        x * Game.SPRITE_SIZE - camera.getPosition().intX(),
+                        end.intY() * Game.SPRITE_SIZE - camera.getPosition().intY()
+                );
+            }
+
+            for (int y = start.intY(); y < end.intY(); y++) {
+                graphics.drawLine(
+                        start.intX() * Game.SPRITE_SIZE - camera.getPosition().intX(),
+                        y * Game.SPRITE_SIZE - camera.getPosition().intY(),
+                        end.intX() * Game.SPRITE_SIZE - camera.getPosition().intX(),
+                        y * Game.SPRITE_SIZE - camera.getPosition().intY()
+                );
             }
         }
     }

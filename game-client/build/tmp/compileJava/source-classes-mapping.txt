@@ -2,18 +2,59 @@ gfx/SpriteLibrary.java
  gfx.SpriteLibrary
 game/Time.java
  game.Time
-game/Game.java
- game.Game
+main/Client.java
+ main.Client
 gfx/ImageUtils.java
  gfx.ImageUtils
 network/Connection.java
  network.Connection
+controller/NPCController.java
+ controller.NPCController
+core/Condition.java
+ core.Condition
+input/Input.java
+ input.Input
+core/CollisionBox.java
+ core.CollisionBox
+core/Direction.java
+ core.Direction
+gfx/SpriteSet.java
+ gfx.SpriteSet
+input/KeyInputConsumer.java
+ input.KeyInputConsumer
+ui/Alignment.java
+ ui.Alignment
+ ui.Alignment$Position
+core/Vector2D.java
+ core.Vector2D
+map/Tile.java
+ map.Tile
+core/Size.java
+ core.Size
+game/settings/RenderSettings.java
+ game.settings.RenderSettings
+game/settings/Value.java
+ game.settings.Value
+core/Position.java
+ core.Position
+controller/PlayerController.java
+ controller.PlayerController
+controller/EntityController.java
+ controller.EntityController
+ui/Spacing.java
+ ui.Spacing
+core/Motion.java
+ core.Motion
+gfx/AnimationManager.java
+ gfx.AnimationManager
+io/Persistable.java
+ io.Persistable
+game/Game.java
+ game.Game
 controller/GameController.java
  controller.GameController
 entity/action/Cough.java
  entity.action.Cough
-input/Input.java
- input.Input
 ui/clickable/UiMiniMap.java
  ui.clickable.UiMiniMap
 entity/humanoid/action/Levitate.java
@@ -22,13 +63,10 @@ ui/clickable/UiClickable.java
  ui.clickable.UiClickable
 input/mouse/MouseHandler.java
  input.mouse.MouseHandler
-ui/Alignment.java
- ui.Alignment
- ui.Alignment$Position
 entity/effect/Caffeinated.java
  entity.effect.Caffeinated
-main/Client.java
- main.Client
+ui/UICanvas.java
+ ui.UICanvas
 ui/clickable/UiCheckBox.java
  ui.clickable.UiCheckBox
  ui.clickable.UiCheckBox$CheckBox
@@ -50,24 +88,16 @@ state/editor/ui/UiTileMenu.java
  state.editor.ui.UiTileMenu
 ai/state/Wander.java
  ai.state.Wander
-core/Motion.java
- core.Motion
-ui/Spacing.java
- ui.Spacing
 entity/effect/Sick.java
  entity.effect.Sick
 map/GameMap.java
  map.GameMap
-game/settings/RenderSettings.java
- game.settings.RenderSettings
+state/login/ui/UiLoginMenu.java
+ state.login.ui.UiLoginMenu
 entity/Bubble.java
  entity.Bubble
 entity/SelectionCircle.java
  entity.SelectionCircle
-controller/EntityController.java
- controller.EntityController
-game/settings/Setting.java
- game.settings.Setting
 ui/clickable/UiTileToggle.java
  ui.clickable.UiTileToggle
 ui/HorizontalContainer.java
@@ -80,16 +110,10 @@ entity/humanoid/Humanoid.java
  entity.humanoid.Humanoid
 state/menu/MenuState.java
  state.menu.MenuState
-map/MapIO.java
- map.MapIO
-core/Condition.java
- core.Condition
 ui/clickable/UiButton.java
  ui.clickable.UiButton
 state/GameState.java
  state.GameState
-core/Vector2D.java
- core.Vector2D
 state/State.java
  state.State
 display/Display.java
@@ -98,18 +122,18 @@ display/Camera.java
  display.Camera
 entity/NPC.java
  entity.NPC
-state/menu/ui/UiMainMenu.java
- state.menu.ui.UiMainMenu
+ui/UiImage.java
+ ui.UiImage
 ui/VerticalContainer.java
  ui.VerticalContainer
 ui/UIContainer.java
  ui.UIContainer
-controller/NPCController.java
- controller.NPCController
-core/CollisionBox.java
- core.CollisionBox
+io/MapIO.java
+ io.MapIO
 game/GameLoop.java
  game.GameLoop
+ui/input/UiTextInput.java
+ ui.input.UiTextInput
 entity/action/Action.java
  entity.action.Action
 input/mouse/MouseConsumer.java
@@ -122,30 +146,22 @@ entity/Player.java
  entity.Player
 state/menu/ui/UiOptionMenu.java
  state.menu.ui.UiOptionMenu
-gfx/AnimationManager.java
- gfx.AnimationManager
 ui/UiText.java
  ui.UiText
 entity/humanoid/action/Cough.java
  entity.humanoid.action.Cough
 state/editor/ui/UiRenderSettings.java
  state.editor.ui.UiRenderSettings
-state/editor/EditorState.java
- state.editor.EditorState
-controller/PlayerController.java
- controller.PlayerController
-core/Size.java
- core.Size
-core/Direction.java
- core.Direction
+display/Renderer.java
+ display.Renderer
 entity/MovingEntity.java
  entity.MovingEntity
+ui/AlignableContainer.java
+ ui.AlignableContainer
 entity/GameObject.java
  entity.GameObject
 ai/AiCondition.java
  ai.AiCondition
-map/Tile.java
- map.Tile
 entity/effect/Isolated.java
  entity.effect.Isolated
 game/settings/GameSettings.java
@@ -158,11 +174,14 @@ input/mouse/action/MouseAction.java
  input.mouse.action.MouseAction
 ai/state/Stand.java
  ai.state.Stand
-core/Position.java
- core.Position
-ui/UiImage.java
- ui.UiImage
-display/Renderer.java
- display.Renderer
-gfx/SpriteSet.java
- gfx.SpriteSet
+game/settings/EditorSettings.java
+ game.settings.EditorSettings
+state/login/LoginState.java
+ state.login.LoginState
+state/editor/EditorState.java
+ state.editor.EditorState
+state/menu/ui/UiMainMenu.java
+ state.menu.ui.UiMainMenu
+ui/UiTabContainer.java
+ ui.UiTabContainer
+ ui.UiTabContainer$UiTab

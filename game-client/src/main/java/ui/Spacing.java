@@ -1,10 +1,14 @@
 package ui;
 
 public class Spacing {
-    private int top;
-    private int right;
-    private int bottom;
-    private int left;
+    private final int top;
+    private final int right;
+    private final int bottom;
+    private final int left;
+
+    public Spacing() {
+        this(0);
+    }
 
     public Spacing(int spacing) {
         this(spacing, spacing);

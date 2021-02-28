@@ -10,18 +10,16 @@ public class UiSicknessStatistics extends HorizontalContainer {
     private UiText numberOfSick;
     private UiText numberOfHealthy;
 
-    public UiSicknessStatistics(Size windowSize) {
-        super(windowSize);
-
+    public UiSicknessStatistics() {
         this.numberOfSick = new UiText("");
         this.numberOfHealthy = new UiText("");
 
-        UIContainer sickContainer = new VerticalContainer(windowSize);
+        UIContainer sickContainer = new VerticalContainer();
         sickContainer.setPadding(new Spacing(0));
         sickContainer.addUiComponent(new UiText("SICK"));
         sickContainer.addUiComponent(numberOfSick);
 
-        UIContainer healthyContainer = new VerticalContainer(windowSize);
+        UIContainer healthyContainer = new VerticalContainer();
         healthyContainer.setPadding(new Spacing(0));
         healthyContainer.addUiComponent(new UiText("HEALHTY"));
         healthyContainer.addUiComponent(numberOfHealthy);
