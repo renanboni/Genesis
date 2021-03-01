@@ -1,3 +1,4 @@
 include 'genesis-server'
 include 'game-client'
+include 'game-common'
 

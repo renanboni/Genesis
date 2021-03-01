@@ -7,8 +7,8 @@ import ui.*;
 
 public class UiSicknessStatistics extends HorizontalContainer {
 
-    private UiText numberOfSick;
-    private UiText numberOfHealthy;
+    private final UiText numberOfSick;
+    private final UiText numberOfHealthy;
 
     public UiSicknessStatistics() {
         this.numberOfSick = new UiText("");

@@ -1,28 +1,36 @@
 package state.editor.ui;
 
-import core.Size;
+import game.settings.EditorSettings;
 import gfx.SpriteLibrary;
 import map.Tile;
 import ui.*;
+import ui.clickable.UiCheckBox;
 import ui.clickable.UiTileToggle;
 
 import java.awt.*;
 
 import static game.Game.SPRITE_SIZE;
 
-public class UiTileMenu extends HorizontalContainer {
-    public UiTileMenu(Size windowSize, SpriteLibrary spriteLibrary) {
-        super(windowSize);
+public class UiTileMenu extends VerticalContainer {
+    public UiTileMenu(SpriteLibrary spriteLibrary, EditorSettings editorSettings) {
         setBackgroundColor(Color.DARK_GRAY);
         setAlignment(new Alignment(Alignment.Position.START, Alignment.Position.END));
 
-        addUiComponent(new UiTileToggle(new Tile(spriteLibrary, "grass")));
-        addUiComponent(getTileSet(spriteLibrary, "concrete"));
-        addUiComponent(getTileSet(spriteLibrary, "dirt"));
+        setPadding(new Spacing(5));
+
+        UiTabContainer tileContainer = new UiTabContainer();
+        tileContainer.addTab("grass", getTileSet(spriteLibrary, "grass"));
+        tileContainer.addTab("concrete", getTileSet(spriteLibrary, "concrete"));
+        tileContainer.addTab("dirt", getTileSet(spriteLibrary, "dirt"));
+        tileContainer.addTab("water", getTileSet(spriteLibrary, "water"));
+        tileContainer.setPadding(new Spacing());
+
+        addUiComponent(tileContainer);
+        addUiComponent(new UiCheckBox("Autotile", editorSettings.getAutoTile()));
     }
 
-    private UiComponent getTileSet(SpriteLibrary spriteLibrary, String tileSet) {
-        UIContainer main = new HorizontalContainer(new Size(0, 0));
+    private UIContainer getTileSet(SpriteLibrary spriteLibrary, String tileSet) {
+        UIContainer main = new HorizontalContainer();
         main.setMargin(new Spacing(0));
         main.setPadding(new Spacing(0));
 
@@ -32,7 +40,7 @@ public class UiTileMenu extends HorizontalContainer {
         int tilesY = tile.getImage().getHeight(null) / SPRITE_SIZE;
 
         for (int x = 0; x < tilesX; x++) {
-            UIContainer column = new VerticalContainer(new Size(0, 0));
+            UIContainer column = new VerticalContainer();
             column.setPadding(new Spacing(0));
             column.setMargin(new Spacing(0));
 

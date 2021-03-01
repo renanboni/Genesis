@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/game-client" />
+            <option value="$PROJECT_DIR$/game-common" />
             <option value="$PROJECT_DIR$/genesis-server" />
           </set>
         </option>

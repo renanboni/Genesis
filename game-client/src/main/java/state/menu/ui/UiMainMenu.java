@@ -18,7 +18,7 @@ public class UiMainMenu extends VerticalContainer {
         centerChildren = true;
 
         addUiComponent(new UiText("Genesis"));
-        //addUiComponent(new UiButton("PLAY", (state) -> state.setNextState(new GameState(windowSize, state.getInput(), state.getSettings()))));
+        addUiComponent(new UiButton("PLAY", (state) -> state.setNextState(new GameState(state.getWindowSize(), state.getInput(), state.getSettings()))));
         addUiComponent(new UiButton("OPTIONS", (state) -> ((MenuState) state).enterMenu(new UiOptionMenu())));
         addUiComponent(new UiButton("EDITOR", (state) -> state.setNextState(new EditorState(state.getWindowSize(), state.getInput(), state.getSettings()))));
         addUiComponent(new UiButton("EXIT", (state) -> System.exit(0)));

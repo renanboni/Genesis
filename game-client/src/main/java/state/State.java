@@ -56,7 +56,6 @@ public abstract class State {
         time.update();
         sortObjectsByPosition();
         updateGameObjects();
-        List.copyOf(uiContainers).forEach(uiContainer -> uiContainer.update(this));
         camera.update(this);
         uiCanvas.update(this);
         mouseHandler.update(this);
@@ -171,5 +170,11 @@ public abstract class State {
 
     public Size getWindowSize() {
         return windowsSize;
+    }
+
+    public void resize(Size size) {
+        windowsSize = size;
+        camera.resize(size);
+        uiCanvas.resize(size);
     }
 }

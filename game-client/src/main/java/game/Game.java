@@ -5,9 +5,10 @@ import core.Size;
 import display.Display;
 import game.settings.GameSettings;
 import input.Input;
+import main.Client;
 import state.GameState;
 import state.State;
-import state.menu.MenuState;
+import state.login.LoginState;
 
 public class Game {
 
@@ -18,15 +19,20 @@ public class Game {
     private State state;
     private final GameSettings settings;
     private final GameController gameController;
+    private final Client client;
 
-    public Game(int width, int height) {
+    public Game(int width, int height, Client client) {
+        this.client = client;
         this.input = new Input();
-        this.display = new Display(width, height, input);
         this.settings = new GameSettings(true);
-        //this.state = new GameState(new Size(width, height), input, settings);
-        // this.state = new LoginState(new Size(width, height), input, settings);
-        this.state = new MenuState(new Size(width, height), input, settings);
+        this.state = new LoginState(new Size(width, height), input, settings, client);
+        // this.state = new MenuState(new Size(width, height), input, settings);
+        this.display = new Display(width, height, input, this::resize);
         this.gameController = new GameController(input);
+    }
+
+    public State getGameState() {
+        return new GameState(state.getWindowSize(), state.getInput(), state.getSettings());
     }
 
     public void render() {
@@ -34,6 +40,7 @@ public class Game {
     }
 
     public void update() {
+        client.update();
         state.update(this);
         gameController.update(this);
     }
@@ -44,5 +51,9 @@ public class Game {
 
     public void enterState(State nextState) {
         state = nextState;
+    }
+
+    public void resize(Size size) {
+        state.resize(size);
     }
 }

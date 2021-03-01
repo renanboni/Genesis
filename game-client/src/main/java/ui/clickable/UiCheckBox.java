@@ -1,7 +1,7 @@
 package ui.clickable;
 
 import core.Size;
-import game.settings.Setting;
+import game.settings.Value;
 import gfx.ImageUtils;
 import state.State;
 import ui.*;
@@ -13,10 +13,12 @@ public class UiCheckBox extends UiComponent {
 
     private final UIContainer container;
 
-    public UiCheckBox(String label, Setting<Boolean> setting) {
-        this.container = new HorizontalContainer(new Size(0, 0));
-        container.addUiComponent(new CheckBox(setting));
+    public UiCheckBox(String label, Value<Boolean> value) {
+        this.container = new HorizontalContainer();
+        container.addUiComponent(new CheckBox(value));
         container.addUiComponent(new UiText(label));
+        container.setPadding(new Spacing());
+        setMargin(new Spacing(5, 0, 0, 0));
     }
 
     @Override
@@ -34,11 +36,11 @@ public class UiCheckBox extends UiComponent {
 
     private static class CheckBox extends UiClickable {
 
-        private final Setting<Boolean> setting;
+        private final Value<Boolean> value;
         private Color color = Color.GRAY;
 
-        private CheckBox(Setting<Boolean> setting) {
-            this.setting = setting;
+        private CheckBox(Value<Boolean> value) {
+            this.value = value;
             this.size = new Size(20, 20);
             this.margin = new Spacing(0, 5, 0, 0);
         }
@@ -47,7 +49,7 @@ public class UiCheckBox extends UiComponent {
         public void update(State state) {
             super.update(state);
 
-            color = setting.getValue() ? Color.WHITE : Color.GRAY;
+            color = value.get() ? Color.WHITE : Color.GRAY;
 
             if (hasFocus) {
                 color = Color.LIGHT_GRAY;
@@ -61,7 +63,7 @@ public class UiCheckBox extends UiComponent {
         @Override
         public void onClick(State state) {
             if (hasFocus) {
-                setting.setValue(!setting.getValue());
+                value.setValue(!value.get());
             }
         }
 
@@ -82,7 +84,7 @@ public class UiCheckBox extends UiComponent {
 
             graphics.setColor(color);
 
-            if (setting.getValue()) {
+            if (value.get()) {
                 graphics.fillRect(0, 0, size.getWidth(), size.getHeight());
             } else {
                 graphics.drawRect(0, 0, size.getWidth() - 1, size.getHeight() - 1);

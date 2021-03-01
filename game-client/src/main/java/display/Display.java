@@ -1,20 +1,33 @@
 package display;
 
+import core.Size;
+import game.ResizeCallback;
 import input.Input;
 import state.State;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.image.BufferStrategy;
 
 public class Display extends JFrame {
 
     private final Canvas canvas;
 
-    public Display(int width, int height, Input input) {
+    public Display(int width, int height, Input input, ResizeCallback callback) {
         setTitle("Genesis");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setResizable(false);
+
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                setPreferredSize(e.getComponent().getSize());
+                pack();
+                callback.resize(new Size(getContentPane().getWidth(), getContentPane().getHeight()));
+                canvas.setPreferredSize(getContentPane().getPreferredSize());
+            }
+        });
 
         canvas = new Canvas();
         canvas.setPreferredSize(new Dimension(width, height));

@@ -25,6 +25,12 @@ public class UiTabContainer extends VerticalContainer {
 
         addUIComponent(tabContainer);
         addUIComponent(contentContainer);
+
+        setupHideButton();
+    }
+
+    private void setupHideButton() {
+        tabContainer.addUiComponent(new UiHideButton(this, contentContainer));
     }
 
     private void activateTab(UiTab uiTab) {

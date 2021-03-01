@@ -11,16 +11,19 @@ import java.awt.*;
 
 public class UiButton extends UiClickable {
 
-    private final UIContainer container;
-    private final UiText label;
+    protected final UIContainer container;
+    protected final UiText label;
 
-    private final ClickAction clickAction;
+    protected final ClickAction clickAction;
+    protected Color backgroundColor;
 
     public UiButton(String label, ClickAction clickAction) {
         this.label = new UiText(label);
         this.clickAction = clickAction;
 
         setMargin(new Spacing(5, 0, 0, 0));
+
+        backgroundColor = Color.GRAY;
 
         container = new VerticalContainer();
         container.setCenterChildren(true);
@@ -34,7 +37,7 @@ public class UiButton extends UiClickable {
         container.update(state);
         size = container.getSize();
 
-        Color color = Color.GRAY;
+        Color color = backgroundColor;
 
         if (hasFocus) {
             color = Color.LIGHT_GRAY;

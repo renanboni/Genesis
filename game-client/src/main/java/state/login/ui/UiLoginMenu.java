@@ -1,12 +1,11 @@
 package state.login.ui;
 
 import game.settings.Value;
-import state.State;
+import main.Client;
 import ui.Alignment;
 import ui.Spacing;
 import ui.UIContainer;
 import ui.VerticalContainer;
-import ui.clickable.ClickAction;
 import ui.clickable.UiButton;
 import ui.input.UiTextInput;
 
@@ -15,7 +14,7 @@ public class UiLoginMenu extends VerticalContainer {
     private final Value<String> email = new Value<>("");
     private final Value<String> password = new Value<>("");;
 
-    public UiLoginMenu() {
+    public UiLoginMenu(Client client) {
         alignment = new Alignment(Alignment.Position.CENTER, Alignment.Position.CENTER);
 
         UIContainer container = new VerticalContainer();
@@ -25,9 +24,7 @@ public class UiLoginMenu extends VerticalContainer {
         container.addUiComponent(new UiTextInput("Email", email));
         container.addUiComponent(new UiTextInput("Password", password));
 
-        container.addUiComponent(new UiButton("Login", state -> {
-
-        }));
+        container.addUiComponent(new UiButton("Login", state -> client.login(email.get(), password.get())));
 
         addUIComponent(container);
     }
