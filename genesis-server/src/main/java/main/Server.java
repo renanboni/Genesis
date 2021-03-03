@@ -1,3 +1,5 @@
+package main;
+
 import codec.PacketCodecFactory;
 import handlers.PacketHandler;
 import handlers.packet.LoginHandler;
@@ -25,6 +27,8 @@ public class Server implements IoHandler, Runnable {
     protected final Queue<Packet> packets;
     protected final Map<Packet.Type, PacketHandler> packetHandlers;
 
+    private WorldManager worldManager;
+
     public static void main(String[] args) {
         Server server = new Server();
         server.start();
@@ -33,6 +37,7 @@ public class Server implements IoHandler, Runnable {
     private Server() {
         packets = new LinkedList<>();
         packetHandlers = loadPacketHandlers();
+        worldManager = new WorldManager(this);
         setupServerListener();
     }
 
@@ -63,7 +68,7 @@ public class Server implements IoHandler, Runnable {
 
         try {
             acceptor.bind(ipAddress);
-            System.out.println("Server listening on: " + ipAddress.getHostName() + ":" + ipAddress.getPort());
+            System.out.println("main.Server listening on: " + ipAddress.getHostName() + ":" + ipAddress.getPort());
         } catch (IOException e) {
             throw new RuntimeException("Unable to bind to: " + ipAddress.getHostName() + ":" + ipAddress.getPort());
         }
@@ -94,7 +99,7 @@ public class Server implements IoHandler, Runnable {
         }
 
         PacketHandler handler = packetHandlers.get(message.getType());
-        handler.handlePacket(message);
+        //handler.handlePacket(message);
         return true;
     }
 

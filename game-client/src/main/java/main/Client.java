@@ -4,6 +4,7 @@ import game.Game;
 import game.GameLoop;
 import codec.Packet;
 import codec.PacketBuilder;
+import model.Hash;
 import network.Connection;
 import org.apache.mina.core.RuntimeIoException;
 
@@ -26,14 +27,17 @@ public class Client {
         gameLoop.run();
     }
 
-    public void login(String email, String password) {
+    public void login(String username, String password) {
+        Hash usernameHash = new Hash(username.toLowerCase());
+        Hash passwordHash = new Hash(usernameHash + password);
+
         PacketBuilder packetBuilder = new PacketBuilder(Packet.Type.LOGIN_SEND);
 
         try {
             this.connection.open("localhost", 36954);
 
-            packetBuilder.putString(email);
-            packetBuilder.putString(password);
+            packetBuilder.putHash(usernameHash);
+            packetBuilder.putHash(passwordHash);
         } catch (RuntimeIoException ex) {
             ex.printStackTrace();
         } finally {

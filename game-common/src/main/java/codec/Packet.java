@@ -1,5 +1,7 @@
 package codec;
 
+import model.Hash;
+import model.Position;
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 
@@ -28,7 +30,7 @@ public class Packet {
     }
 
     public enum Type {
-        LOGIN_SEND, LOGIN_RESPONSE
+        LOGIN_SEND, LOGIN_RESPONSE, PLAYERS_ADD_RESPONSE
     }
 
     public int size() {
@@ -37,6 +39,23 @@ public class Packet {
     public IoSession getSession() { return session; }
     public Type getType() {
         return type;
+    }
+    public void putHash(Hash hash) {
+        payload.put(hash.getBytes(), 0, Hash.LENGTH);
+    }
+    public Hash getHash() {
+        byte[] data = new byte[Hash.LENGTH];
+        payload.get(data, 0, Hash.LENGTH);
+
+        return Hash.fromBytes(data);
+    }
+    public void putShort(short s) {
+        payload.putShort(s);
+    }
+
+    public void putPoint(Position p) {
+        this.putShort((short) p.x);
+        this.putShort((short) p.y);
     }
 
     public String getString() {
