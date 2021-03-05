@@ -18,17 +18,20 @@ public class Player extends Humanoid {
     private double targetRange;
     private SelectionCircle selectionCircle;
 
-    public Player(EntityController controller, SpriteLibrary spriteLibrary, SelectionCircle selectionCircle) {
-        super(controller, spriteLibrary);
-        this.animationManager = new AnimationManager(spriteLibrary.getSpriteSet("dave"));
+    public Player(EntityController controller) {
+        super(controller);
+        this.animationManager = new AnimationManager(SpriteLibrary.getInstance().getSpriteSet("dave"));
         this.targetRange = Game.SPRITE_SIZE;
+    }
+
+    public void setSelectionCircle(SelectionCircle selectionCircle) {
         this.selectionCircle = selectionCircle;
     }
 
     @Override
     public void update(State state) {
         super.update(state);
-        handleTarget(state);
+        // handleTarget(state);
         handleInput(state);
     }
 

@@ -23,7 +23,7 @@ public class MapIO {
         }
     }
 
-    public static GameMap load(SpriteLibrary spriteLibrary) {
+    public static GameMap load() {
         try (BufferedReader bufferReader = new BufferedReader(new FileReader(MapIO.class.getResource("/maps/map.ism").getFile()))) {
             GameMap gameMap = new GameMap();
 
@@ -36,7 +36,7 @@ public class MapIO {
             }
 
             gameMap.applySerializedData(builder.toString());
-            gameMap.reloadGraphics(spriteLibrary);
+            gameMap.reloadGraphics();
             return gameMap;
         } catch (IOException e) {
             e.printStackTrace();

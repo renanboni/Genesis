@@ -25,7 +25,6 @@ public abstract class State {
 
     protected final List<GameObject> gameObjects;
     protected final List<UIContainer> uiContainers;
-    protected final SpriteLibrary spriteLibrary;
     private final GameSettings settings;
     protected GameMap gameMap;
     protected Input input;
@@ -44,7 +43,6 @@ public abstract class State {
         this.uiCanvas = new UICanvas(windowSize);
         this.gameObjects = new ArrayList<>();
         this.uiContainers = new ArrayList<>();
-        this.spriteLibrary = new SpriteLibrary();
         this.camera = new Camera(windowSize);
         this.time = new Time();
         this.mouseHandler = new MouseHandler();
@@ -128,10 +126,6 @@ public abstract class State {
                 .collect(Collectors.toList());
     }
 
-    public SpriteLibrary getSpriteLibrary() {
-        return spriteLibrary;
-    }
-
     public void spawn(GameObject gameObject) {
         gameObjects.add(gameObject);
     }
@@ -153,7 +147,7 @@ public abstract class State {
     }
 
     public void loadGameMap() {
-        gameMap = MapIO.load(spriteLibrary);
+        gameMap = MapIO.load();
     }
 
     public KeyInputConsumer getKeyInputConsumer() {

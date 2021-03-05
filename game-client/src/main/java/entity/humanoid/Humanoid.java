@@ -22,13 +22,13 @@ public class Humanoid extends MovingEntity {
     protected Optional<Action> action;
     private static final List<String> availableCharacters = new ArrayList<>(List.of("dave", "matt", "melissa", "roger"));
 
-    public Humanoid(EntityController controller, SpriteLibrary spriteLibrary) {
-        super(controller, spriteLibrary);
+    public Humanoid(EntityController controller) {
+        super(controller);
 
         effects = new ArrayList<>();
         action = Optional.empty();
 
-        this.animationManager = new AnimationManager(spriteLibrary.getSpriteSet(getRandomCharacter()));
+        this.animationManager = new AnimationManager(SpriteLibrary.getInstance().getSpriteSet(getRandomCharacter()));
 
         collisionBoxSize = new Size(16, 28);
         renderOffset = new Position(size.getWidth() / 2, size.getHeight() - 12);

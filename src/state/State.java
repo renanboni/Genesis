@@ -21,7 +21,6 @@ public abstract class State {
 
     protected final List<GameObject> gameObjects;
     protected final List<UIContainer> uiContainers;
-    protected final SpriteLibrary spriteLibrary;
     protected GameMap gameMap;
     protected Input input;
     protected Camera camera;
@@ -36,7 +35,6 @@ public abstract class State {
         this.input = input;
         this.gameObjects = new ArrayList<>();
         this.uiContainers = new ArrayList<>();
-        this.spriteLibrary = new SpriteLibrary();
         this.camera = new Camera(windowSize);
         this.time = new Time();
     }

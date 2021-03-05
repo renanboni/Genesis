@@ -11,8 +11,18 @@ public class SpriteLibrary {
     private final Map<String, SpriteSet> spriteSets = new HashMap<>();
     private final Map<String, Image> images = new HashMap<>();
 
-    public SpriteLibrary() {
+    private static SpriteLibrary instance;
+
+    private SpriteLibrary() {
         loadSpritesFromDisk();
+    }
+
+    public static SpriteLibrary getInstance() {
+        if (instance == null) {
+            instance = new SpriteLibrary();
+        }
+
+        return instance;
     }
 
     private void loadSpritesFromDisk() {

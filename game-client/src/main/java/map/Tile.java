@@ -16,14 +16,11 @@ public class Tile implements Persistable {
     private String tileName;
 
     public Tile() {
+        this("grass");
     }
 
-    public Tile(SpriteLibrary spriteLibrary) {
-        this(spriteLibrary, "grass");
-    }
-
-    public Tile(SpriteLibrary spriteLibrary, String tileName) {
-        this.image = spriteLibrary.getImage(tileName);
+    public Tile(String tileName) {
+        this.image = SpriteLibrary.getInstance().getImage(tileName);
         this.tileName = tileName;
         generateSprite();
     }
@@ -69,8 +66,8 @@ public class Tile implements Persistable {
         return sprite;
     }
 
-    public void reloadGraphics(SpriteLibrary spriteLibrary) {
-        image = spriteLibrary.getImage(tileName);
+    public void reloadGraphics() {
+        image = SpriteLibrary.getInstance().getImage(tileName);
         generateSprite();
     }
 

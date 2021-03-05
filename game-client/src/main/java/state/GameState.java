@@ -3,6 +3,7 @@ package state;
 import controller.NPCController;
 import controller.PlayerController;
 import core.Condition;
+import core.Position;
 import core.Size;
 import entity.NPC;
 import entity.Player;
@@ -34,14 +35,23 @@ public class GameState extends State {
 
     public GameState(Size windowSize, Input input, GameSettings settings) {
         super(windowSize, input, settings);
-        this.gameMap = new GameMap(new Size(20, 20), spriteLibrary);
+        this.gameMap = new GameMap(new Size(20, 20));
         settings.getRenderSettings().getShouldRenderGrid().setValue(false);
         this.isPlaying = true;
 
-        win();
+        // win();
         initializeCharacters();
         initializeUi();
         initializeConditions();
+    }
+
+    public void initPlayer(Player player) {
+        gameObjects.add(player);
+        camera.focusOn(player);
+    }
+
+    public void addPlayer(Player player) {
+        gameObjects.add(player);
     }
 
     @Override
@@ -98,14 +108,14 @@ public class GameState extends State {
     }
 
     private void initializeCharacters() {
-        SelectionCircle circle = new SelectionCircle();
+  /*      SelectionCircle circle = new SelectionCircle();
         Player player = new Player(new PlayerController(input), spriteLibrary, circle);
         gameObjects.add(player);
         camera.focusOn(player);
-        gameObjects.add(circle);
+        gameObjects.add(circle);*/
 
-        initNPCs(50);
-        makeNumberOfNpcsSick(10);
+     /*   initNPCs(50);
+        makeNumberOfNpcsSick(10);*/
     }
 
     private void makeNumberOfNpcsSick(int number) {
@@ -117,7 +127,7 @@ public class GameState extends State {
 
     private void initNPCs(int amount) {
         for (int i = 0; i < amount; i++) {
-            NPC npc = new NPC(new NPCController(), spriteLibrary);
+            NPC npc = new NPC(new NPCController());
             npc.setPosition(gameMap.getRandomPosition());
             this.gameObjects.add(npc);
         }

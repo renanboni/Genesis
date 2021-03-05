@@ -4,10 +4,7 @@ import core.Position;
 import core.Size;
 import display.Camera;
 import game.Game;
-import gfx.SpriteLibrary;
 import io.Persistable;
-
-import java.io.Serializable;
 import java.util.Arrays;
 
 public class GameMap implements Persistable {
@@ -19,14 +16,14 @@ public class GameMap implements Persistable {
     public GameMap() {
     }
 
-    public GameMap(Size size, SpriteLibrary spriteLibrary) {
+    public GameMap(Size size) {
         tiles = new Tile[size.getWidth()][size.getHeight()];
-        initTiles(spriteLibrary);
+        initTiles();
     }
 
-    private void initTiles(SpriteLibrary spriteLibrary) {
+    private void initTiles() {
         for (Tile[] row : tiles) {
-            Arrays.fill(row, new Tile(spriteLibrary));
+            Arrays.fill(row, new Tile());
         }
     }
 
@@ -71,10 +68,10 @@ public class GameMap implements Persistable {
         tiles[gridX][gridY] = tile;
     }
 
-    public void reloadGraphics(SpriteLibrary spriteLibrary) {
+    public void reloadGraphics() {
         for (Tile[] row : tiles) {
             for (Tile tile : row) {
-                tile.reloadGraphics(spriteLibrary);
+                tile.reloadGraphics();
             }
         }
     }

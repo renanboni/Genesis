@@ -28,6 +28,10 @@ public class PacketBuilder extends Packet {
         }
     }
 
+    public void putBoolean(boolean b) {
+        payload.put((byte) (b ? 1 : 0));
+    }
+
     public IoBuffer getPayload() {
         return payload.getSlice(0, this.size()).asReadOnlyBuffer().rewind();
     }

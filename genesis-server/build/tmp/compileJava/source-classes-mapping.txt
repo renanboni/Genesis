@@ -1,6 +1,18 @@
-Server.java
- Server
+handlers/packet/SignUpHandler.java
+ handlers.packet.SignUpHandler
+db/models/DBLocation.java
+ db.models.DBLocation
+main/WorldManager.java
+ main.WorldManager
 handlers/PacketHandler.java
  handlers.PacketHandler
+db/models/DBPlayer.java
+ db.models.DBPlayer
+model/Player.java
+ model.Player
+main/Server.java
+ main.Server
+db/Database.java
+ db.Database
 handlers/packet/LoginHandler.java
  handlers.packet.LoginHandler

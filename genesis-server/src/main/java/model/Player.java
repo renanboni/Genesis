@@ -6,7 +6,10 @@ import main.Server;
 import main.WorldManager;
 import org.apache.mina.core.session.IoSession;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 public class Player extends Entity {
 
@@ -17,10 +20,33 @@ public class Player extends Entity {
     private final WorldManager worldManager;
     private final Server server;
 
+    private List<Player> knownPlayers;
+
     public Player(IoSession session, WorldManager worldManager, Server server) {
         this.session = session;
         this.worldManager = worldManager;
         this.server = server;
+        this.knownPlayers = new ArrayList<>();
+    }
+
+    public void update(List<Player> players) {
+        if (knownPlayers.containsAll(players)) {
+            return;
+        }
+
+        // Pick up the unknown players
+        List<Player> unknownPlayers = new ArrayList<>();
+
+        for (Player player: players) {
+            if (!knownPlayers.contains(player)) {
+                unknownPlayers.add(player);
+            }
+        }
+
+        // Add to the knownPlayers list
+        knownPlayers.addAll(unknownPlayers);
+
+        sendAddPlayers(unknownPlayers);
     }
 
     /**
@@ -46,13 +72,12 @@ public class Player extends Entity {
 
         packet.putShort((short) playersCount);
 
-        for (Player player: players) {
+        for (Player player : players) {
             // Ignore ourself
             if (player.equals(this)) {
                 continue;
             }
 
-            packet.putHash(player.id);
             packet.putPoint(player.position);
         }
 
@@ -71,6 +96,10 @@ public class Player extends Entity {
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    public void setId(Hash id) {
+        this.id = id;
     }
 
     public void write(PacketBuilder packet) {

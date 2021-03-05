@@ -1,0 +1,14 @@
+<PacketHandler-array>
+    <PacketHandler>
+        <types>
+            <type>LOGIN_RESPONSE</type>
+        </types>
+        <handler>handlers.LoginHandler</handler>
+    </PacketHandler>
+    <PacketHandler>
+        <types>
+            <type>PLAYERS_ADD_RESPONSE</type>
+        </types>
+        <handler>handlers.PlayerHandler</handler>
+    </PacketHandler>
+</PacketHandler-array>

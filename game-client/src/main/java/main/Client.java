@@ -1,12 +1,13 @@
 package main;
 
+import entity.Player;
 import game.Game;
 import game.GameLoop;
 import codec.Packet;
 import codec.PacketBuilder;
-import model.Hash;
 import network.Connection;
 import org.apache.mina.core.RuntimeIoException;
+import state.GameState;
 
 public class Client {
 
@@ -27,17 +28,14 @@ public class Client {
         gameLoop.run();
     }
 
-    public void login(String username, String password) {
-        Hash usernameHash = new Hash(username.toLowerCase());
-        Hash passwordHash = new Hash(usernameHash + password);
-
-        PacketBuilder packetBuilder = new PacketBuilder(Packet.Type.LOGIN_SEND);
+    public void loginOrRegister(String username, String password, boolean isLogin) {
+        PacketBuilder packetBuilder = isLogin ? new PacketBuilder(Packet.Type.LOGIN_SEND) : new PacketBuilder(Packet.Type.SIGN_UP_SEND);
 
         try {
             this.connection.open("localhost", 36954);
 
-            packetBuilder.putHash(usernameHash);
-            packetBuilder.putHash(passwordHash);
+            packetBuilder.putString(username);
+            packetBuilder.putString(password);
         } catch (RuntimeIoException ex) {
             ex.printStackTrace();
         } finally {
@@ -54,16 +52,20 @@ public class Client {
         connection.update();
     }
 
-    public void loginSuccess() {
-        game.enterState(game.getGameState());
+    public void loginSuccess(Player player) {
+        game.init(player);
+    }
+
+    public void addPlayer(Player player) {
+        GameState gameState = (GameState) game.getGameState();
+        gameState.addPlayer(player);
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void loginError(String msg) {
+        System.err.println(msg);
     }
 }
-
-
-
-
-
-
-
-
-

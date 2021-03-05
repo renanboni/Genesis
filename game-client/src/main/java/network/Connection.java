@@ -2,8 +2,7 @@ package network;
 
 import codec.Packet;
 import codec.PacketCodecFactory;
-import handler.LoginHandler;
-import handler.PacketHandler;
+import handlers.PacketHandler;
 import main.Client;
 import codec.PacketBuilder;
 import org.apache.mina.core.RuntimeIoException;
@@ -13,8 +12,10 @@ import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
+import util.PersistenceManager;
 
 import java.net.InetSocketAddress;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -39,9 +40,25 @@ public class Connection implements IoHandler {
     }
 
     private Map<Packet.Type, PacketHandler> loadPacketHandlers() {
-        Map<Packet.Type, PacketHandler> packets = new HashMap<>();
-        packets.put(Packet.Type.LOGIN_RESPONSE, new LoginHandler());
-        return packets;
+        Map<Packet.Type, PacketHandler> handlers = new HashMap<Packet.Type, PacketHandler>();
+        URL path = PacketHandler.class.getResource("packethandlers.xml");
+        if (path == null) {
+            throw new RuntimeException("Unable to find packethandlers.xml resource");
+        }
+
+        PersistenceManager.PacketHandler[] definitions = (PersistenceManager.PacketHandler[]) PersistenceManager.load(path);
+        for (PersistenceManager.PacketHandler definition : definitions) {
+            try {
+                PacketHandler handler = (PacketHandler) definition.handler.newInstance();
+                for (Packet.Type type : definition.types)
+                    handlers.put(type, handler);
+            }
+            catch (Exception e) {
+                throw new RuntimeException("Error loading packet handlers: " + e.getMessage());
+            }
+        }
+
+        return handlers;
     }
 
     public void open(String hostname, int port) throws RuntimeIoException {
@@ -68,16 +85,26 @@ public class Connection implements IoHandler {
     }
 
     private boolean processPacket(Packet message) {
-        if (session == null)
+        if (session == null) {
             return true;
+        }
 
         PacketHandler handler = packetHandlers.get(message.getType());
 
-        if (message.getType() == Packet.Type.LOGIN_RESPONSE) {
-            client.loginSuccess();
+        if (handler == null) {
+            session.close(true);
+            return false;
         }
-        // If there's no handler then close the session (forcefully)
-        return true;
+
+        try {
+            handler.handlePacket(message, client);
+            return true;
+        }
+        // Something went wrong (malformed packet?), close the session (forcefully)
+        catch (Exception e) {
+            session.close(true);
+            return false;
+        }
     }
 
     public void write(PacketBuilder packet) {
@@ -85,44 +112,61 @@ public class Connection implements IoHandler {
     }
 
     @Override
-    public void sessionCreated(IoSession session) throws Exception {
+    public void sessionCreated(IoSession session) {
 
     }
 
     @Override
-    public void sessionOpened(IoSession session) throws Exception {
+    public void sessionOpened(IoSession session) {
 
     }
 
     @Override
-    public void sessionClosed(IoSession session) throws Exception {
+    public void sessionClosed(IoSession session) {
         System.out.println("sessionClosed");
     }
 
     @Override
-    public void sessionIdle(IoSession session, IdleStatus status) throws Exception {
-        System.out.println("sessionIdle");
+    public void sessionIdle(IoSession session, IdleStatus status) {
+        System.out.println("sessionIdle, shutting it down");
+        session.close(false);
     }
 
     @Override
-    public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
-        System.out.println("Exception");
+    public void exceptionCaught(IoSession session, Throwable cause) {
+        System.out.println("Error from server connection: " + cause.getMessage());
+        cause.printStackTrace();
+
+        // Close the session (forcefully)
+        session.close(true);
     }
 
     @Override
-    public void messageReceived(IoSession session, Object object) throws Exception {
+    public void messageReceived(IoSession session, Object object) {
         System.out.println("messageReceived");
         Packet message = (Packet) object;
 
         synchronized (session) {
-            if (message.getType() == Packet.Type.LOGIN_RESPONSE) {
-                packets.add(message);
+            if (session.containsAttribute("pending")) {
+                synchronized (packets) {
+                    packets.add(message);
+                }
+            } else if (message.getType() == Packet.Type.LOGIN_RESPONSE) {
+                // Mark this session as pending login
+                session.setAttribute("pending");
+
+                // Queue the packet
+                synchronized (packets) {
+                    packets.add(message);
+                }
+            } else {
+                session.close(true);
             }
         }
     }
 
     @Override
-    public void messageSent(IoSession session, Object message) throws Exception {
+    public void messageSent(IoSession session, Object message) {
         System.out.println("Message sent!");
         Packet packet = (Packet) message;
         System.out.println(packet);

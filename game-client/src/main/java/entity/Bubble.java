@@ -11,10 +11,10 @@ public class Bubble extends MovingEntity {
 
     private boolean halted;
 
-    public Bubble(NPCController controller, SpriteLibrary spriteLibrary) {
-        super(controller, spriteLibrary);
+    public Bubble(NPCController controller) {
+        super(controller);
 
-        this.animationManager = new AnimationManager(new SpriteSet(spriteLibrary.getImage("bubble")), false);
+        this.animationManager = new AnimationManager(new SpriteSet(SpriteLibrary.getInstance().getImage("bubble")), false);
     }
 
     @Override

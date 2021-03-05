@@ -1,0 +1,14 @@
+<PacketHandler-array>
+    <PacketHandler>
+        <types>
+            <type>LOGIN_SEND</type>
+        </types>
+        <handler>handlers.packet.LoginHandler</handler>
+    </PacketHandler>
+    <PacketHandler>
+        <types>
+            <type>SIGN_UP_SEND</type>
+        </types>
+        <handler>handlers.packet.SignUpHandler</handler>
+    </PacketHandler>
+</PacketHandler-array>

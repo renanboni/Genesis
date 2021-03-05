@@ -10,8 +10,8 @@ import state.State;
 public class NPC extends Humanoid {
     private final AiManager manager;
 
-    public NPC(EntityController controller, SpriteLibrary spriteLibrary) {
-        super(controller, spriteLibrary);
+    public NPC(EntityController controller) {
+        super(controller);
 
         this.manager = new AiManager();
         this.motion = new Motion(Math.random() + 1);

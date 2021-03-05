@@ -18,17 +18,17 @@ public class EditorState extends State {
     public EditorState(Size windowSize, Input input, GameSettings settings) {
         super(windowSize, input, settings);
 
-        this.gameMap = new GameMap(new Size(16, 16), spriteLibrary);
+        this.gameMap = new GameMap(new Size(16, 16));
         settings.getRenderSettings().getShouldRenderGrid().setValue(true);
 
-        getMouseHandler().setPrimaryButtonAction(new TilePlacer(new Tile(getSpriteLibrary(), "grass")));
+        getMouseHandler().setPrimaryButtonAction(new TilePlacer(new Tile("grass")));
 
         uiCanvas.addUIComponent(new UiButtonMenu());
         uiCanvas.addUIComponent(new UiRenderSettings(settings.getRenderSettings(), gameMap));
 
         UiTabContainer toolsContainer = new UiTabContainer();
         toolsContainer.setAlignment(new Alignment(Alignment.Position.START, Alignment.Position.END));
-        toolsContainer.addTab("TILES", new UiTileMenu(getSpriteLibrary(), settings.getEditorSettings()));
+        toolsContainer.addTab("TILES", new UiTileMenu(settings.getEditorSettings()));
         toolsContainer.addTab("SCENERY",new UiRenderSettings(settings.getRenderSettings(), gameMap));
         uiCanvas.addUIComponent(toolsContainer);
     }

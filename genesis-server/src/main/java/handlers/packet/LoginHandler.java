@@ -1,5 +1,6 @@
 package handlers.packet;
 
+import db.models.DBPlayer;
 import handlers.PacketHandler;
 import codec.Packet;
 import codec.PacketBuilder;
@@ -8,8 +9,6 @@ import main.WorldManager;
 import model.Player;
 import model.Position;
 import org.apache.mina.core.session.IoSession;
-
-import java.util.Random;
 
 public class LoginHandler implements PacketHandler {
 
@@ -32,6 +31,9 @@ public class LoginHandler implements PacketHandler {
         if (player == null) {
             session.close(false);
         } else {
+            session.setAttribute("client", player);
+            session.removeAttribute("pending");
+
             worldManager.addPlayer(player);
         }
     }
@@ -40,11 +42,45 @@ public class LoginHandler implements PacketHandler {
         IoSession session = packet.getSession();
         PacketBuilder response = new PacketBuilder(Packet.Type.LOGIN_RESPONSE);
 
-        session.write(response);
+        try {
+            String username = packet.getString();
+            String pass = packet.getString();
 
-        Player player = new Player(session, worldManager, server);
-        player.setPosition(new Position(new Random().nextInt(400), new Random().nextInt(400)));
+            DBPlayer dbPlayer = server.getDatabase().getPlayer(username, pass);
 
-        return player;
+            /*
+              if we don't find any player, it means the username and/or password is wrong
+              the payload will look like this
+
+              PAYLOAD >> || false || Invalid username and/or password. ||
+             */
+            if (dbPlayer == null) {
+                response.putBoolean(false);
+                response.putString("Invalid username and/or password.");
+                return null;
+            }
+
+            Player player = new Player(session, worldManager, server);
+            player.setPosition(new Position(dbPlayer.getX(), dbPlayer.getY()));
+
+            response.putBoolean(true);
+            response.putPoint(new Position(dbPlayer.getX(), dbPlayer.getY()));
+
+            /*
+                if we do find a player, the payload will look like this:
+                PAYLOAD >> || true || x || y ||
+             */
+            return player;
+        } catch (Exception e) {
+            // PAYLOAD >> || false || Invalid username and/or password. ||
+            response.putBoolean(false);
+            response.putString(e.getMessage());
+
+            e.printStackTrace();
+
+            return null;
+        } finally {
+            session.write(response);
+        }
     }
 }

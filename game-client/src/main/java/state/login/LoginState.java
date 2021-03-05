@@ -12,7 +12,7 @@ public class LoginState extends State {
 
     public LoginState(Size windowSize, Input input, GameSettings settings, Client client) {
         super(windowSize, input, settings);
-        this.gameMap = new GameMap(new Size(20, 20), spriteLibrary);
+        this.gameMap = new GameMap(new Size(20, 20));
         uiCanvas.addUIComponent(new UiLoginMenu(client));
     }
 

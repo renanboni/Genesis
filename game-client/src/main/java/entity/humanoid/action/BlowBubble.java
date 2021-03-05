@@ -39,7 +39,7 @@ public class BlowBubble extends Action {
         target.perform(new Levitate());
         target.addEffect(new Isolated());
 
-        bubble = new Bubble(new NPCController(), state.getSpriteLibrary());
+        bubble = new Bubble(new NPCController());
         bubble.insert(target);
         state.spawn(bubble);
     }
