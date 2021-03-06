@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Player extends Entity {
 
-    private Hash id;
+    private int id;
     private Position position;
 
     private final IoSession session;
@@ -85,7 +85,7 @@ public class Player extends Entity {
     }
 
     @Override
-    public Hash getID() {
+    public int getID() {
         return id;
     }
 
@@ -98,7 +98,7 @@ public class Player extends Entity {
         this.position = position;
     }
 
-    public void setId(Hash id) {
+    public void setId(int id) {
         this.id = id;
     }
 

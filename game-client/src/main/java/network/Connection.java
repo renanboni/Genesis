@@ -77,8 +77,9 @@ public class Connection implements IoHandler {
 
     public void update() {
         synchronized (packets) {
-            for (Packet message : packets)
+            for (Packet message : packets) {
                 this.processPacket(message);
+            }
 
             packets.clear();
         }
@@ -102,6 +103,7 @@ public class Connection implements IoHandler {
         }
         // Something went wrong (malformed packet?), close the session (forcefully)
         catch (Exception e) {
+            e.printStackTrace();
             session.close(true);
             return false;
         }
@@ -123,7 +125,7 @@ public class Connection implements IoHandler {
 
     @Override
     public void sessionClosed(IoSession session) {
-        System.out.println("sessionClosed");
+        System.out.println("sessionClosed ID " +session.getId());
     }
 
     @Override
@@ -143,15 +145,15 @@ public class Connection implements IoHandler {
 
     @Override
     public void messageReceived(IoSession session, Object object) {
-        System.out.println("messageReceived");
         Packet message = (Packet) object;
+        System.out.println("RECEIVED << " + message);
 
         synchronized (session) {
             if (session.containsAttribute("pending")) {
                 synchronized (packets) {
                     packets.add(message);
                 }
-            } else if (message.getType() == Packet.Type.LOGIN_RESPONSE) {
+            } else if (message.getType() == Packet.Type.LOGIN_RESPONSE || message.getType() == Packet.Type.SIGN_UP_RESPONSE) {
                 // Mark this session as pending login
                 session.setAttribute("pending");
 
@@ -167,8 +169,7 @@ public class Connection implements IoHandler {
 
     @Override
     public void messageSent(IoSession session, Object message) {
-        System.out.println("Message sent!");
         Packet packet = (Packet) message;
-        System.out.println(packet);
+        System.out.println("SENT >> " + packet);
     }
 }

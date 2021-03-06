@@ -7,18 +7,18 @@ codec/PacketEncoder.java
  codec.PacketEncoder
 codec/PacketCodecFactory.java
  codec.PacketCodecFactory
-model/Entity.java
- model.Entity
+codec/Packet.java
+ codec.Packet
+ codec.Packet$Type
 util/ISAACAlgorithm.java
  util.ISAACAlgorithm
 codec/PacketDecoder.java
  codec.PacketDecoder
 codec/PacketBuilder.java
  codec.PacketBuilder
-model/EntityList.java
- model.EntityList
 model/Hash.java
  model.Hash
-codec/Packet.java
- codec.Packet
- codec.Packet$Type
+model/Entity.java
+ model.Entity
+model/EntityList.java
+ model.EntityList

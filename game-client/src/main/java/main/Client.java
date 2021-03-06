@@ -57,8 +57,7 @@ public class Client {
     }
 
     public void addPlayer(Player player) {
-        GameState gameState = (GameState) game.getGameState();
-        gameState.addPlayer(player);
+        game.addPlayer(player);
     }
 
     public Game getGame() {

@@ -9,6 +9,8 @@ import main.WorldManager;
 import model.Player;
 import org.apache.mina.core.session.IoSession;
 
+import java.util.Random;
+
 public class SignUpHandler implements PacketHandler {
     @Override
     public void handlePacket(Packet packet, Server server, WorldManager worldManager, Player player) {
@@ -19,11 +21,13 @@ public class SignUpHandler implements PacketHandler {
             String username = packet.getString();
             String password = packet.getString();
 
+            Random random = new Random();
+
             DBPlayer dbPlayer = new DBPlayer();
             dbPlayer.setUsername(username);
             dbPlayer.setPassword(password);
-            dbPlayer.setX(250);
-            dbPlayer.setY(250);
+            dbPlayer.setX(random.nextInt(400));
+            dbPlayer.setY(random.nextInt(400));
 
             server.getDatabase().savePlayer(dbPlayer);
 

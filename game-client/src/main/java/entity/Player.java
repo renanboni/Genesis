@@ -11,6 +11,7 @@ import state.State;
 
 import java.util.Comparator;
 import java.util.Optional;
+import java.util.Random;
 
 public class Player extends Humanoid {
 
@@ -18,9 +19,12 @@ public class Player extends Humanoid {
     private double targetRange;
     private SelectionCircle selectionCircle;
 
+    private String[] names = {"dave", "matt", "melissa", "roger"};
+    private Random random = new Random();
+
     public Player(EntityController controller) {
         super(controller);
-        this.animationManager = new AnimationManager(SpriteLibrary.getInstance().getSpriteSet("dave"));
+        this.animationManager = new AnimationManager(SpriteLibrary.getInstance().getSpriteSet(names[random.nextInt(names.length)]));
         this.targetRange = Game.SPRITE_SIZE;
     }
 

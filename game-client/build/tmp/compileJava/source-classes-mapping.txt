@@ -1,19 +1,19 @@
-game/Time.java
- game.Time
+gfx/AnimationManager.java
+ gfx.AnimationManager
 gfx/ImageUtils.java
  gfx.ImageUtils
-io/Persistable.java
- io.Persistable
-input/Input.java
- input.Input
 controller/NPCController.java
  controller.NPCController
+input/Input.java
+ input.Input
+io/Persistable.java
+ io.Persistable
 game/settings/GameSettings.java
  game.settings.GameSettings
-gfx/SpriteSet.java
- gfx.SpriteSet
-gfx/SpriteLibrary.java
- gfx.SpriteLibrary
+map/Tile.java
+ map.Tile
+controller/PlayerController.java
+ controller.PlayerController
 ui/Alignment.java
  ui.Alignment
  ui.Alignment$Position
@@ -21,18 +21,18 @@ core/Direction.java
  core.Direction
 game/settings/EditorSettings.java
  game.settings.EditorSettings
-core/Position.java
- core.Position
-io/MapIO.java
- io.MapIO
+gfx/SpriteLibrary.java
+ gfx.SpriteLibrary
+gfx/SpriteSet.java
+ gfx.SpriteSet
 core/Size.java
  core.Size
 game/settings/Value.java
  game.settings.Value
 core/Motion.java
  core.Motion
-controller/PlayerController.java
- controller.PlayerController
+core/Position.java
+ core.Position
 ui/Spacing.java
  ui.Spacing
 core/Vector2D.java
@@ -49,6 +49,8 @@ game/ResizeCallback.java
  game.ResizeCallback
 core/Condition.java
  core.Condition
+game/Time.java
+ game.Time
 game/Game.java
  game.Game
 network/Connection.java
@@ -107,8 +109,8 @@ map/GameMap.java
  map.GameMap
 state/login/ui/UiLoginMenu.java
  state.login.ui.UiLoginMenu
-handlers/PlayerHandler.java
- handlers.PlayerHandler
+display/Renderer.java
+ display.Renderer
 entity/SelectionCircle.java
  entity.SelectionCircle
 entity/Bubble.java
@@ -146,6 +148,8 @@ ui/UIContainer.java
  ui.UIContainer
 game/GameLoop.java
  game.GameLoop
+io/MapIO.java
+ io.MapIO
 ui/input/UiTextInput.java
  ui.input.UiTextInput
 entity/action/Action.java
@@ -160,8 +164,6 @@ entity/Player.java
  entity.Player
 state/menu/ui/UiOptionMenu.java
  state.menu.ui.UiOptionMenu
-gfx/AnimationManager.java
- gfx.AnimationManager
 ui/UiText.java
  ui.UiText
 entity/humanoid/action/Cough.java
@@ -178,8 +180,6 @@ entity/GameObject.java
  entity.GameObject
 ai/AiCondition.java
  ai.AiCondition
-map/Tile.java
- map.Tile
 entity/effect/Isolated.java
  entity.effect.Isolated
 entity/effect/Effect.java
@@ -194,5 +194,5 @@ state/login/LoginState.java
  state.login.LoginState
 ui/UiImage.java
  ui.UiImage
-display/Renderer.java
- display.Renderer
+handlers/PlayerHandler.java
+ handlers.PlayerHandler

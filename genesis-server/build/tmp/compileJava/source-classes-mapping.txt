@@ -1,5 +1,5 @@
-handlers/packet/SignUpHandler.java
- handlers.packet.SignUpHandler
+model/Player.java
+ model.Player
 db/models/DBLocation.java
  db.models.DBLocation
 main/WorldManager.java
@@ -8,11 +8,11 @@ handlers/PacketHandler.java
  handlers.PacketHandler
 db/models/DBPlayer.java
  db.models.DBPlayer
-model/Player.java
- model.Player
+handlers/packet/LoginHandler.java
+ handlers.packet.LoginHandler
 main/Server.java
  main.Server
 db/Database.java
  db.Database
-handlers/packet/LoginHandler.java
- handlers.packet.LoginHandler
+handlers/packet/SignUpHandler.java
+ handlers.packet.SignUpHandler

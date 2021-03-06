@@ -52,6 +52,8 @@ public class GameState extends State {
 
     public void addPlayer(Player player) {
         gameObjects.add(player);
+        System.out.println("New player added: " + player.toString());
+        System.out.println("Players online: " + gameObjects.size());
     }
 
     @Override

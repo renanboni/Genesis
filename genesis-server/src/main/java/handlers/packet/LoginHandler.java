@@ -61,6 +61,7 @@ public class LoginHandler implements PacketHandler {
             }
 
             Player player = new Player(session, worldManager, server);
+            player.setId(dbPlayer.getId());
             player.setPosition(new Position(dbPlayer.getX(), dbPlayer.getY()));
 
             response.putBoolean(true);

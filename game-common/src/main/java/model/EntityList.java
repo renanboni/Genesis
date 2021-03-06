@@ -18,12 +18,12 @@ public class EntityList <T extends Entity> implements Iterable<T> {
     }
 
     public boolean add(T entity) {
-        if (allEntities.containsKey(entity.getID())) {
+        /*if (allEntities.containsKey(entity.getID())) {
             return false;
         }
 
         allEntities.put(entity.getID(), entity);
-        newEntities.add(entity);
+        newEntities.add(entity);*/
 
         return true;
     }

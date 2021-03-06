@@ -1,6 +1,5 @@
 package main;
 
-import model.EntityList;
 import model.Player;
 
 import java.util.ArrayList;

@@ -34,7 +34,7 @@ public class Server implements IoHandler, Runnable {
     protected final Queue<Packet> packets;
     protected final Map<Packet.Type, PacketHandler> packetHandlers;
 
-    private WorldManager worldManager;
+    private final WorldManager worldManager;
 
     private Database db;
 
@@ -176,7 +176,7 @@ public class Server implements IoHandler, Runnable {
 
     @Override
     public void sessionClosed(IoSession session) {
-        System.out.println("Session closed");
+        System.out.println("Session closed || ID " + session.getId());
     }
 
     @Override
@@ -223,8 +223,13 @@ public class Server implements IoHandler, Runnable {
     }
 
     @Override
-    public void messageSent(IoSession session, Object message) {
+    public void messageSent(IoSession session, Object o) {
+        Packet message = (Packet) o;
 
+        System.out.println("-----------------");
+        System.out.println("|| PACKET SENT ||");
+        System.out.println(message.toString());
+        System.out.println("-----------------");
     }
 
     public Database getDatabase() {

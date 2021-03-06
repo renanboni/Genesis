@@ -17,11 +17,11 @@ public class Game {
 
     private final Display display;
     private final Input input;
-    private State state;
     private final GameSettings settings;
     private final GameController gameController;
     private final Client client;
-    private State gameState;
+    private State state;
+    private GameState gameState;
 
     public Game(int width, int height, Client client) {
         this.client = client;
@@ -33,11 +33,14 @@ public class Game {
     }
 
     public void init(Player player) {
-        GameState gameState = new GameState(state.getWindowSize(), state.getInput(), state.getSettings());
-        gameState.addPlayer(player);
+        gameState = new GameState(state.getWindowSize(), state.getInput(), state.getSettings());
+        gameState.initPlayer(player);
 
-        this.gameState = gameState;
         enterState(gameState);
+    }
+
+    public void addPlayer(Player player) {
+        gameState.addPlayer(player);
     }
 
     public State getGameState() {

@@ -19,6 +19,8 @@ public class LoginHandler implements PacketHandler {
                 Player player = new Player(new PlayerController(client.getGame().getInput()));
                 player.setPosition(new Position(x, y));
 
+                // packet.getSession().removeAttribute("pending");
+
                 client.loginSuccess(player);
             } else {
                 String msg = packet.getString();

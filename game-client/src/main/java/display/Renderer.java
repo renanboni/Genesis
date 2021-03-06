@@ -9,6 +9,8 @@ import java.awt.*;
 
 public class Renderer {
 
+    private static double delay = 2000;
+
     public static void render(State state, Graphics graphics) {
         renderMap(state, graphics);
         renderGameObjects(state, graphics);
@@ -43,6 +45,15 @@ public class Renderer {
                         gameObject.getRenderPosition(camera).intY(),
                         null
                 ));
+
+        if (System.currentTimeMillis() > delay) {
+            System.out.println("DRAWING " + state.getGameObjects()
+                    .stream()
+                    .filter(camera::isInView)
+                    .count() + " OBJECTS");
+
+            delay = System.currentTimeMillis() + 2000;
+        }
     }
 
     private static void renderMap(State state, Graphics graphics) {
